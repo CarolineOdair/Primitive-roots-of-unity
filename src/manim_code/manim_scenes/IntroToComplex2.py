@@ -69,7 +69,9 @@ class MultiplyingComplex(MyScene):  # 4th scene
             r"|z|", r"\;e^{\imath", r"\varphi}", r"\cdot", r"|z|", r"\;e^{\imath", r"\varphi}", r"\\ &=", 
             r"|z|^2", r"\;e^{\imath ",r"2\varphi", r"}",
         ).next_to((plane.get_corner(UR) + plane.get_right())/2, 3*RIGHT)
-        self.play(ReplacementTransform(equation, equation_2))
+
+        self.play(TransformMatchingTex(equation, equation_2))
+        # self.play(ReplacementTransform(equation, equation_2))
 
         temp_group_2 = self.multiplying(equation_2, rel_elements, abs(Z[0]-Z[0]**2), Z[1])
         temp_point_2 = [sub for sub in temp_group_2.submobjects if type(sub)==Dot][0]
