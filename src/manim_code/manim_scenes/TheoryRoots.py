@@ -93,14 +93,12 @@ class ComplexRoots(MyScene):  # 6th scene
         FS = font_size
 
         ######    prepare changes    ######
-
-        # z = r e^{i*phi}
         formula_number_ch = [
-            [r"z", r"=", r"r", r"e^{\imath", r"\varphi", r"}", r"= 1"],
-            [r"z", r"=", r"1", r"e^{\imath", r"\varphi", r"}", r"= 1"], # 2 -> r = 1
-            [r"z", r"=", r"e^{\imath", r"\varphi", r"}", r"= 1"],
-            [r"z", r"=", r"e^{\imath", r"0", r"}", r"= 1"], # 4 -> phi = 0
-            [r"z", r"=", r"1"],
+            r"z @ = @ r @ e^{\imath @ \varphi @ } @ = 1".split("@"),
+            r"z @ = @ 1 @ e^{\imath @ \varphi @ } @ = 1".split("@"), # 2 -> r = 1
+            r"z @ = @ e^{\imath @ \varphi @ } @ = 1".split("@"),
+            r"z @ = @ e^{\imath @ 0 @ } @ = 1".split("@"), # 4 -> phi = 0
+            r"z @ = @ 1".split("@"),
         ]
         formula_number_ch = [MathTex(*text, font_size=FS+10).to_edge(UP) for text in formula_number_ch]
         formula_number_ch.insert(0, formula_number)
@@ -116,12 +114,12 @@ class ComplexRoots(MyScene):  # 6th scene
 
         # w_k = \sqrt[n]{r} e^{i (phi + 2k*pi)/n}
         formula_roots_list_ch = [
-            [r"w_k", r"=", r"\sqrt[n]{|1|}", r"\exp\left(\imath\frac{\varphi+2k\pi}{n}\right)"], # 1 -> r = 1
-            [r"w_k", r"=", r"1", r"\exp\left(\imath\frac{\varphi+2k\pi}{n}\right)"],
-            [r"w_k", r"=", r"\exp\left(\imath\frac{\varphi+2k\pi}{n}\right)"],
-            [r"w_k", r"=", r"\exp\left(\imath\frac{0+2k\pi}{n}\right)"], # 4 -> phi = 0
-            [r"w_k", r"=", r"\exp\left(\imath\frac{2k\pi}{n}\right)"],
-            [r"w_k", r"=", r"\exp\left(\frac{\imath 2k\pi}{n}\right)"]
+            r"w_k @ = @ \sqrt[n]{|1|} @ \exp\left(\imath\frac{\varphi+2k\pi}{n}\right)".split("@"), # 1 -> r = 1
+            r"w_k @ = @ 1 @ \exp\left(\imath\frac{\varphi+2k\pi}{n}\right)".split("@"),
+            r"w_k @ = @ \exp\left(\imath\frac{\varphi+2k\pi}{n}\right)".split("@"),
+            r"w_k @ = @ \exp\left(\imath\frac{0+2k\pi}{n}\right)".split("@"), # 4 -> phi = 0
+            r"w_k @ = @ \exp\left(\imath\frac{2k\pi}{n}\right)".split("@"),
+            r"w_k @ = @ \exp\left(\frac{\imath 2k\pi}{n}\right)".split("@")
         ]
         formula_roots_list_ch = [MathTex(*text, font_size=FS+10).shift(3*LEFT+DOWN) for text in formula_roots_list_ch]
         formula_roots_list_ch.insert(0, formula_roots)
@@ -199,28 +197,28 @@ class ComplexRoots(MyScene):  # 6th scene
         formula_power = MathTex(r"w^n", r"=", r"z", font_size=FS+10)
         
         formula_roots_list = [
-            [r"w_k", r"=", r"\sqrt[n]{r}", r"\exp\left(\imath\frac{\varphi+2k\pi}{n}\right)", r",\quad k\in", r"\mathbb{Z}"],
-            [r"w_k", r"=", r"\sqrt[n]{r}", r"\exp\left(\imath\frac{\varphi+2k\pi}{n}\right)", r",\quad k\in", r"\{0,1,...,n-1\}"],
-            [r"w_k", r"=", r"\sqrt[n]{r}", r"\exp\left(\imath\frac{\varphi+2k\pi}{n}\right)", r",\quad k\in", r"\mathbb{Z}_n"],
-            [r"w_k", r"=", r"\sqrt[n]{r}", r"\exp\left(\imath\frac{\varphi+2k\pi}{n}\right)"]
+            r"w_k @ = @ \sqrt[n]{r} @ \exp\left(\imath\frac{\varphi+2k\pi}{n}\right) @ ,\quad k\in @ \mathbb{Z}".split("@"),
+            r"w_k @ = @ \sqrt[n]{r} @ \exp\left(\imath\frac{\varphi+2k\pi}{n}\right) @ ,\quad k\in @ \{0,1,...,n-1\}".split("@"),
+            r"w_k @ = @ \sqrt[n]{r} @ \exp\left(\imath\frac{\varphi+2k\pi}{n}\right) @ ,\quad k\in @ \mathbb{Z}_n".split("@"),
+            r"w_k @ = @ \sqrt[n]{r} @\exp\left(\imath\frac{\varphi+2k\pi}{n}\right)".split("@")
         ]
         formula_roots_list = [MathTex(*text, font_size=FS+10).shift(DOWN) for text in formula_roots_list]
 
         formula_roots_power_expl_list = [
-            [r"w_k^n", r"=", r"\left(", r"\sqrt[n]{r}", r"\exp\left( \imath", r"\frac{\varphi+2k\pi}{n}",       r"\right)", r"\right)^n", r",\quad k\in\mathbb{Z}"],
-            [r"w_k^n", r"=",          r"\sqrt[n]{r}^n", r"\exp\left( \imath", r"\frac{\varphi+2k\pi}{n}",       r"\right)", r"^n",        r",\quad k\in\mathbb{Z}"],
-            [r"w_k^n", r"=", r"r",                      r"\exp\left( \imath", r"\frac{\varphi+2k\pi}{n}\cdot n",r"\right)",               r",\quad k\in\mathbb{Z}"],
-            [r"w_k^n", r"=", r"r",                      r"\exp\left( \imath",       r"\varphi+2k\pi",           r"\right)",               r",\quad k\in\mathbb{Z}"],
-            [r"w_k^n", r"=", r"r",                      r"\exp\left( \imath",       r"\varphi",                 r"\right)",               r",\quad k\in\mathbb{Z}"],
-            [r"w_k^n", r"=", r"z", r",\quad k\in\mathbb{Z}"]
+            r"w_k^n @ = @ \left( @ \sqrt[n]{r} @   \exp\left( \imath @ \frac{\varphi+2k\pi}{n} @ \right) @ \right)^n @ ,\quad k\in\mathbb{Z}".split("@"),
+            r"w_k^n @ = @          \sqrt[n]{r}^n @ \exp\left( \imath @ \frac{\varphi+2k\pi}{n} @        \right)@^n @   ,\quad k\in\mathbb{Z}".split("@"),
+            r"w_k^n @ = @ r @                      \exp\left( \imath @ \frac{\varphi+2k\pi}{n}\cdot n @ \right) @      ,\quad k\in\mathbb{Z}".split("@"),
+            r"w_k^n @ = @ r @                      \exp\left( \imath @       \varphi+2k\pi @            \right) @      ,\quad k\in\mathbb{Z}".split("@"),
+            r"w_k^n @ = @ r @                      \exp\left( \imath @       \varphi @                  \right) @      ,\quad k\in\mathbb{Z}".split("@"),
+            r"w_k^n @ = @ z @ ,\quad k\in\mathbb{Z}".split("@")
         ]
         formula_roots_power_expl_list = [MathTex(*text, font_size=FS).shift(2.3*DOWN) for text in formula_roots_power_expl_list]
 
         formula_roots_expl_list = [
-            [r"w_k", r"=", r"\sqrt[n]{r}", r"\exp\left(\imath",            r"\frac{\varphi+2(n+m)\pi}{n}",         r"\right)", r",\quad k = n+m,\; m < n"],
-            [r"w_k", r"=", r"\sqrt[n]{r}", r"\exp\left(\imath",            r"\frac{\varphi+2m\pi+2n\pi}{n}",       r"\right)", r",\quad k = n+m,\; m < n"],
-            [r"w_k", r"=", r"\sqrt[n]{r}", r"\exp\left(\imath", r"\left(", r"\frac{\varphi+2m\pi}{n}", r"+2\pi", r"\right)", r"\right)", r",\quad k = n+m,\; m < n"],
-            [r"w_k", r"=", r"\sqrt[n]{r}", r"\exp\left(\imath",            r"\frac{\varphi+2m\pi}{n}",                       r"\right)", r",\quad k = n+m,\; m < n"]
+            r"w_k @ = @ \sqrt[n]{r} @ \exp\left(\imath @          \frac{\varphi+2(n+m)\pi}{n} @               \right) @ ,\quad k = n+m,\; m < n".split("@"),
+            r"w_k @ = @ \sqrt[n]{r} @ \exp\left(\imath @          \frac{\varphi+2m\pi+2n\pi}{n} @             \right) @ ,\quad k = n+m,\; m < n".split("@"),
+            r"w_k @ = @ \sqrt[n]{r} @ \exp\left(\imath @ \left( @ \frac{\varphi+2m\pi}{n} @ +2\pi @ \right) @ \right) @ ,\quad k = n+m,\; m < n".split("@"),
+            r"w_k @ = @ \sqrt[n]{r} @ \exp\left(\imath @          \frac{\varphi+2m\pi}{n} @                   \right) @ ,\quad k = n+m,\; m < n".split("@")
         ]
         formula_roots_expl_list = [MathTex(*text, font_size=FS).shift(2.3*DOWN) for text in formula_roots_expl_list]
 
