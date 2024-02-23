@@ -1,7 +1,7 @@
 from imports import *
 
 
-class ComplexRoots(MyScene):  # 6th scene
+class ComplexRoots(MyScene):  # 5th scene
     def construct(self):
         FS = 35
         

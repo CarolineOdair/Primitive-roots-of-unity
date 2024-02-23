@@ -1,6 +1,6 @@
 from imports import *
 
-class IntroGroupDef(MovingCameraScene):  # 7th scene
+class IntroGroupDef(MovingCameraScene):  # 6th scene
     def construct(self):
 
         self.FS = 35
