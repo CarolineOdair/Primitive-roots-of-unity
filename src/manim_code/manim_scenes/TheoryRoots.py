@@ -45,9 +45,9 @@ class ComplexRoots(MyScene):  # 6th scene
     def display_examples_roots_of_1(self):
         def get_pos(i, length):
             if i < length/2:
-                VER = 1.5*UP 
+                VER = 1.7*UP
             else:
-                VER = 1.5*DOWN 
+                VER = 1.7*DOWN 
             HOR = 4.5*LEFT + (i % 4)*3*RIGHT
             return VER+HOR
             
@@ -67,13 +67,21 @@ class ComplexRoots(MyScene):  # 6th scene
 
             plane = self.add_plane(azimuth_step=1, size=2.5, radius_max=1.5, radius_step=0.5).shift(pos)
             z_point, z_n_group = self.get_point_and_n_roots((1,0), n_[i], plane, roots_color=col)
+            plane_title = MathTex(r"\text{E}_{", rf"{n_[i]}", r"}", font_size=30).next_to(plane, 0.5*UP)
 
-            gr = VGroup(plane, z_n_group)
+            gr = VGroup(plane, plane_title, z_n_group)
             elements_for_planes_group.append(gr)
             
 
         vgr = VGroup(*elements_for_planes_group)
         self.play(Create(vgr), run_time=8)
+
+        # Uncreate plane titles here because `ReplacementTransform`` in
+        # self.clear_screen gives error if MathTex, Tex, Text mobject is in the group
+        # Error: `operands could not be broadcast together with shapes <tuple(n,m)> (32,3)`, n,m depends
+        for group in vgr:
+            mobj = [el for el in group if type(el)==MathTex][0]
+            self.play(Uncreate(mobj), run_time=1/8)
 
         return vgr
 
