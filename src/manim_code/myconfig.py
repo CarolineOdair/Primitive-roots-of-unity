@@ -23,6 +23,31 @@ config.max_files_cached = 250
 ######    my scene class    ######
 class MyScene(Scene):
 
+    def show_transform_and_fadeout_expl(self, list_of_formulas, start:int=0, end:int=None, fade_out:bool=True, circumscribe:bool=False, transform_goal=None) -> None:
+
+        length = len(list_of_formulas)
+        if end is None or end > length:
+            end = length
+
+
+        for l in range(start, end):
+            if l == 0:
+                self.play(Write(list_of_formulas[l]))
+            elif l > 0 and l < end:
+                self.play(TransformMatchingTex(list_of_formulas[l-1], list_of_formulas[l]))
+
+
+        if circumscribe and transform_goal is not None:
+            self.play(Circumscribe(list_of_formulas[end-1], color=COLOR_1), Circumscribe(transform_goal, color=COLOR_2))
+        elif circumscribe:
+            self.play(Circumscribe(list_of_formulas[end-1], color=COLOR_1, fade_out=True))
+
+
+        if fade_out:
+            self.play(FadeOut(list_of_formulas[end-1]))
+
+            
+
     def get_point_and_n_roots(self, z:complex, n:int, plane:PolarPlane, z_point_color=COLOR_1, roots_color=COLOR_2):
 
         roots_n_of_z = self.get_n_roots_from_polar(z, n)

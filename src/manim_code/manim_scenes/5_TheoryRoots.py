@@ -242,33 +242,6 @@ class ComplexRoots(MyScene):  # 5th scene
         self.play(vgroup.animate.shift(3.5*LEFT))
 
         return formula_number, vgroup
-    
-
-
-
-    def show_transform_and_fadeout_expl(self, list_of_formulas, start:int=0, end:int=None, fade_out:bool=True, circumscribe:bool=False, transform_goal=None) -> None:
-
-        length = len(list_of_formulas)
-        if end is None or end > length:
-            end = length
-
-
-        for l in range(start, end):
-            if l == 0:
-                self.play(Write(list_of_formulas[l]))
-            elif l > 0 and l < end:
-                self.play(TransformMatchingTex(list_of_formulas[l-1], list_of_formulas[l]))
-
-
-        if circumscribe and transform_goal is not None:
-            self.play(Circumscribe(list_of_formulas[end-1], color=COLOR_1), Circumscribe(transform_goal, color=COLOR_2))
-        elif circumscribe:
-            self.play(Circumscribe(list_of_formulas[end-1], color=COLOR_1, fade_out=True))
-
-
-        if fade_out:
-            self.play(FadeOut(list_of_formulas[end-1]))
-
 
 
     def add_plane(self, azimuth_step=12, shiftt=0, size=4, radius_step=1, radius_max=3, r_values:list=[]):
