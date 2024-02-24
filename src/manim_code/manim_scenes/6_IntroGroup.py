@@ -167,6 +167,7 @@ class IntroGroupDef(MovingCameraScene):  # 6th scene
             TransformMatchingTex(ax_0_quantifier, ax_1_quantifier), 
             TransformMatchingTex(ax_0_text, ax_1_text)
             )
+        self.wait(1)
         self.play(FadeToColor(ax_1, color=WHITE))
 
         ######    axiom 2    ######
@@ -179,6 +180,7 @@ class IntroGroupDef(MovingCameraScene):  # 6th scene
             TransformMatchingTex(ax_1_quantifier, ax_2_quantifier), 
             TransformMatchingTex(ax_1_text, ax_2_text)
             )
+        self.wait(1)
         self.play(FadeToColor(ax_2, color=WHITE))
 
         ######    axiom 3    ######
@@ -191,10 +193,11 @@ class IntroGroupDef(MovingCameraScene):  # 6th scene
             TransformMatchingTex(ax_2_quantifier, ax_3_quantifier), 
             TransformMatchingTex(ax_2_text, ax_3_text)
             )
+        self.wait(1)
         self.play(FadeToColor(ax_3, color=WHITE))
 
 
-        self.wait(2)
+        self.wait(1)
         self.play(FadeOut(temp_group_ex, underline, ax_3_quantifier, ax_3_text))
 
 
@@ -220,7 +223,6 @@ class IntroGroupDef(MovingCameraScene):  # 6th scene
         # Return VGroup containing 2 texes and arc (arrow from text to '(G, *)')
 
         group_notation = MathTex(r"(G, *)").shift(2.5*UP+4*RIGHT)  # group notation
-        group_text =Tex(r"group", tex_template=TexFontTemplates.french_cursive, font_size=50).shift(1.5*UP+4.5*RIGHT)
         group_text = Tex(r"group").shift(1.5*UP+4*RIGHT)
 
         self.play(Write(group_notation))
