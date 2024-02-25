@@ -5,17 +5,76 @@ class GeneratorDef(MyScene):  # 7th scene
     def construct(self):
         self.FS = 35
 
-        ######    def of power in group    ###### 
+        #####    def of power in group    ###### 
         group_notation = self.add_group_notation()
         power_def = self.add_power_def()
         generator_def = self.add_generator_def()
         self.play(FadeOut(group_notation), generator_def.animate.move_to(group_notation))
 
-        ######    integers example    ######
+        #####    integers example    ######
         self.manage_integers_example()
 
+        #####    z_8 example    ######
+        self.play(FadeOut(power_def, generator_def))
+        obj_on_screen = self.z_8_example()
+
+
+        self.clear_screen(obj_to_clear=obj_on_screen, color=COLOR_2)
 
         self.wait(5)
+
+
+
+
+
+    def z_8_example(self):
+        temp_group_ex_8 = MathTex(r"(\mathbb{Z}_", r"8", r", +_", r"8", r")", substrings_to_isolate="8").set_color_by_tex("8", COLOR_1).to_edge(UP)
+        self.play(Write(temp_group_ex_8))
+        a_text = MathTex(r"a=", r"2").next_to(temp_group_ex_8, DOWN)
+        self.play(Write(a_text))
+        
+        # create boxes with numbers from 0 to 8
+        boxes = self.get_zn_boxes_group(8, 0.1, 0.4, 10, self.FS*5, (a_text, 6*DOWN))
+        self.play(Create(boxes))
+
+        # powers of 2
+        boxes = self.manage_power_z_n(8, 2, 10, boxes)
+        generator_text = MathTex(r"\langle 2 \rangle = \{ 0, 2, 4, 6 \} \neq \mathbb{Z}_8").next_to(a_text, DOWN)
+        self.play(Write(generator_text))
+
+        self.play(boxes.animate.set_stroke_color(WHITE))
+        self.play(FadeOut(generator_text))
+
+        # powers of 1
+        self.play(Transform(a_text, MathTex(r"a=", r"1").next_to(temp_group_ex_8, DOWN)))
+        boxes = self.manage_power_z_n(8, 1, 7, boxes)
+        self.play(boxes[0].animate.set_stroke_color(COLOR_2))
+        generator_text = MathTex(r"\langle 1 \rangle = \{ 0,1,2,3,4,5,6,7 \} = \mathbb{Z}_8").next_to(a_text, DOWN)
+        self.play(Write(generator_text))
+
+        self.play(boxes.animate.set_stroke_color(WHITE))
+        self.play(FadeOut(generator_text))
+
+        # powers of 3
+        a_text_2 = MathTex(r"a=", r"3").next_to(temp_group_ex_8, DOWN)
+        self.play(ReplacementTransform(a_text, a_text_2))
+        boxes = self.manage_power_z_n(8, 3, 7, boxes)
+        self.play(boxes[0].animate.set_stroke_color(COLOR_2))
+        generator_text = MathTex(r"\langle 3 \rangle = \{ 0,1,2,3,4,5,6,7 \} = \mathbb{Z}_8").next_to(a_text, DOWN)
+        self.play(Write(generator_text))
+
+        mobjects_on_screen = VGroup(temp_group_ex_8, generator_text, boxes, a_text_2)
+        return mobjects_on_screen
+
+
+
+    def manage_power_z_n(self, n:int, a:int, m:int, boxes:VGroup) -> VGroup:
+        for i in range(m):
+            temp_box_start = (a + a*i) % n
+            if boxes[temp_box_start].get_stroke_color() != COLOR_2:
+                self.play(boxes[temp_box_start].animate.set_stroke_color(COLOR_2))
+            self.add_zn_boxes_animation(boxes, temp_box_start, a, color=COLOR_2)
+        return boxes
 
 
     def manage_integers_example(self):
@@ -55,12 +114,17 @@ class GeneratorDef(MyScene):  # 7th scene
         ).scale(0.7).move_to(1*DOWN)
         power_ex_table_3 = MathTable(
             [["2^{-4}", "2^{-3}", "2^{-2}", "2^{-1}", "2^0", "2^1" ,"2^2", "2^3", "2^4"],
+            [r"\times", r"\times", r"\times", -2, 0, 2, 4, 6, 8]],
+        ).scale(0.7).move_to(1*DOWN)
+        power_ex_table_4 = MathTable(
+            [["2^{-4}", "2^{-3}", "2^{-2}", "2^{-1}", "2^0", "2^1" ,"2^2", "2^3", "2^4"],
             [-8, -6, -4, -2, 0, 2, 4, 6, 8]],
         ).scale(0.7).move_to(1*DOWN)
         self.play(Create(power_ex_table))
         self.wait()
         self.play(TransformMatchingShapes(power_ex_table, power_ex_table_2))
         self.play(TransformMatchingShapes(power_ex_table_2, power_ex_table_3))
+        self.play(TransformMatchingShapes(power_ex_table_3, power_ex_table_4))
 
         # 2 is not a generator
         generator_2 = MathTex(r"\langle", r"2", r"\rangle =", r"2", r"\mathbb{Z}").next_to(temp_group_ex, 1.5*DOWN)
@@ -79,7 +143,7 @@ class GeneratorDef(MyScene):  # 7th scene
         generator.insert(0, generator_2)
 
         self.show_transform_and_fadeout_expl(generator, start=1, end=2, fade_out=False)
-        self.play(FadeOut(power_ex_table_3))
+        self.play(FadeOut(power_ex_table_4))
         self.show_transform_and_fadeout_expl(generator, start=2, end=4, circumscribe=True, fade_out=False)
         self.show_transform_and_fadeout_expl(generator, start=4, circumscribe=True, fade_out=True)
 

@@ -23,6 +23,81 @@ config.max_files_cached = 250
 ######    my scene class    ######
 class MyScene(Scene):
 
+    def clear_screen(self, obj_to_clear:VGroup, color:ManimColor=COLOR_1) -> None:
+        if obj_to_clear is None:
+            obj_to_clear = VGroup(*self.mobjects)
+
+        last_dot = Dot(color=color)
+        self.play(ReplacementTransform(obj_to_clear, last_dot))
+        self.wait(0.5)
+        self.play(Uncreate(last_dot))
+
+
+    def add_zn_boxes_animation(self, boxes:VGroup, start:int, add:int, arc_radius:float=1.5, color=WHITE):
+
+        n = len(boxes)
+        start_index = start
+        last_arrows = []
+
+        length_between_boxes = boxes.submobjects[1].get_top() - boxes.submobjects[0].get_top()
+        
+        for plus in range(add):
+            if start_index != n-1:
+                start_top = boxes.submobjects[start_index % n].get_top() + [0, 0.1, 0]
+                next_top = start_top + length_between_boxes
+                arrow = self.get_and_add_arrow(start_top, next_top, radius=-arc_radius, play=False, color=color)
+
+                if len(last_arrows) != 0:
+                    self.play(Create(arrow), FadeOut(*last_arrows))
+                else:
+                    self.play(Create(arrow))
+
+                start_index += 1
+                last_arrows = [arrow]
+
+            elif start_index == len(boxes)-1:
+                start_1_top = boxes.submobjects[start_index % n].get_top() + [0, 0.1, 0]
+                next_1_top = start_1_top + length_between_boxes
+                arrow_1 = self.get_and_add_arrow(start_1_top, next_1_top, radius=-arc_radius, play=False, color=color)
+
+                next_2_top = boxes.submobjects[0].get_top() + [0, 0.1, 0]
+                start_2_top = next_2_top - length_between_boxes
+                arrow_2 =  self.get_and_add_arrow(start_2_top, next_2_top, radius=-arc_radius, play=False, color=color)
+
+                if len(last_arrows) != 0:
+                    self.play(Create(arrow_1), Create(arrow_2), FadeOut(*last_arrows))
+                else:
+                    self.play(Create(arrow_1), Create(arrow_2))
+
+                start_index += 1
+                last_arrows = [arrow_1, arrow_2]
+
+        self.play(FadeOut(*last_arrows))
+
+
+
+
+    def get_zn_boxes_group(self, n:int, buff_to_width_ratio:float=0.1, height_to_width_ratio:float=0.4,
+                           width:float=10, font_size:float=40, relative_position:tuple=(ORIGIN, 0)):
+        # Create VGroup of n boxes fitting the width of the screen with numbers from 0 to n-1 
+
+        buff = width * buff_to_width_ratio
+        boxes = VGroup(*[
+            Rectangle(WHITE, width=width, height=width*height_to_width_ratio).add(Text(str(i), font_size=font_size, color=COLOR_1))
+            for i in range(n)
+        ])
+
+        boxes.arrange_in_grid(cols=n, buff=buff).next_to(*relative_position)
+
+        # width_of_boxes = n*width+(n-1)*buff
+        scale = config.frame_width / (n*(width+buff))
+        buff_on_outside = buff*scale/2
+        boxes.width = config.frame_width - 2*buff_on_outside
+
+        return boxes
+    
+
+
     def show_transform_and_fadeout_expl(self, list_of_formulas, start:int=0, end:int=None, fade_out:bool=True, circumscribe:bool=False, transform_goal=None) -> None:
 
         length = len(list_of_formulas)

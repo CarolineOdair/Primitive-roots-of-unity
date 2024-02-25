@@ -37,9 +37,10 @@ class ComplexRoots(MyScene):  # 5th scene
         self.clear_screen(planes_roots_of_1, COLOR_1)
 
 
-
-
         self.wait(5)
+
+
+
 
 
     def display_examples_roots_of_1(self):
@@ -84,15 +85,6 @@ class ComplexRoots(MyScene):  # 5th scene
             self.play(Uncreate(mobj), run_time=1/8)
 
         return vgr
-
-
-
-    def clear_screen(self, mobjects_on_screen, color=COLOR_1) -> None:
-
-        last_dot = Dot(color=color)
-        self.play(ReplacementTransform(mobjects_on_screen, last_dot))
-        self.wait(0.5)
-        self.play(Uncreate(last_dot))
 
 
 
