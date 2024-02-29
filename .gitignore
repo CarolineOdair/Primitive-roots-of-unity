@@ -165,3 +165,6 @@ media/
 
 # VScode
 .vscode/
+
+# test files
+test_scene.py

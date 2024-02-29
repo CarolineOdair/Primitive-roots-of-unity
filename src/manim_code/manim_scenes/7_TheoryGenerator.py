@@ -38,7 +38,9 @@ class GeneratorDef(MyScene):  # 7th scene
         self.play(Create(boxes))
 
         # powers of 2
-        boxes = self.manage_power_z_n(8, 2, 10, boxes)
+        a = 2
+        # boxes = self.manage_power_z_n(8, 2, 10, boxes)
+        self.add_zn_boxes_animation(boxes, a, a*5, step=a, color=COLOR_2)
         generator_text = MathTex(r"\langle 2 \rangle = \{ 0, 2, 4, 6 \} \neq \mathbb{Z}_8").next_to(a_text, DOWN)
         self.play(Write(generator_text))
 
@@ -46,8 +48,10 @@ class GeneratorDef(MyScene):  # 7th scene
         self.play(FadeOut(generator_text))
 
         # powers of 1
+        a=1
         self.play(Transform(a_text, MathTex(r"a=", r"1").next_to(temp_group_ex_8, DOWN)))
-        boxes = self.manage_power_z_n(8, 1, 7, boxes)
+        # boxes = self.manage_power_z_n(8, 1, 7, boxes)
+        self.add_zn_boxes_animation(boxes, a, a*8, step=a, color=COLOR_2)
         self.play(boxes[0].animate.set_stroke_color(COLOR_2))
         generator_text = MathTex(r"\langle 1 \rangle = \{ 0,1,2,3,4,5,6,7 \} = \mathbb{Z}_8").next_to(a_text, DOWN)
         self.play(Write(generator_text))
@@ -56,9 +60,10 @@ class GeneratorDef(MyScene):  # 7th scene
         self.play(FadeOut(generator_text))
 
         # powers of 3
+        a = 3
         a_text_2 = MathTex(r"a=", r"3").next_to(temp_group_ex_8, DOWN)
         self.play(ReplacementTransform(a_text, a_text_2))
-        boxes = self.manage_power_z_n(8, 3, 7, boxes)
+        self.add_zn_boxes_animation(boxes, a, a*7, step=a, color=COLOR_2)
         self.play(boxes[0].animate.set_stroke_color(COLOR_2))
         generator_text = MathTex(r"\langle 3 \rangle = \{ 0,1,2,3,4,5,6,7 \} = \mathbb{Z}_8").next_to(a_text, DOWN)
         self.play(Write(generator_text))
@@ -67,14 +72,13 @@ class GeneratorDef(MyScene):  # 7th scene
         return mobjects_on_screen
 
 
+    def animation_before_the_arrow(self, boxes, start_box_index):
+        if boxes[start_box_index].get_stroke_color() != COLOR_2:
+            self.play(boxes[start_box_index].animate.set_stroke_color(COLOR_2))
 
-    def manage_power_z_n(self, n:int, a:int, m:int, boxes:VGroup) -> VGroup:
-        for i in range(m):
-            temp_box_start = (a + a*i) % n
-            if boxes[temp_box_start].get_stroke_color() != COLOR_2:
-                self.play(boxes[temp_box_start].animate.set_stroke_color(COLOR_2))
-            self.add_zn_boxes_animation(boxes, temp_box_start, a, color=COLOR_2)
-        return boxes
+    def animation_after_the_arrow(self, boxes, end_box_index):
+        if boxes[end_box_index].get_stroke_color() != COLOR_2:
+            self.play(boxes[end_box_index].animate.set_stroke_color(COLOR_2))
 
 
     def manage_integers_example(self):
@@ -190,15 +194,5 @@ class GeneratorDef(MyScene):  # 7th scene
         vgroup = VGroup(group_notation, group_text, a)
         return vgroup
     
-    def get_and_add_arrow(self, start, end, radius:float=2, color=WHITE, tip_length=0.2, tip_width=0.2, play:bool=True):
-        # Play creating arc between given points
-        # Return arc
 
-        a = ArcBetweenPoints(start, end, radius=radius, color=color)
-        a.add_tip(tip_shape=StealthTip, tip_length=tip_length, tip_width=tip_width)
-
-        if play:
-            self.play(Create(a))
-
-        return a
 

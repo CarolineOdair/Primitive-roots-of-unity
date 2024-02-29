@@ -1,6 +1,9 @@
 from imports import *
 
 class IntroGroupDef(MovingCameraScene):  # 6th scene
+    # Some functions are copied from MyScene class
+    # They have to be defined here because IntroGroupDef class 
+    # inherits from MovingCameraScene, not MyScene
     def construct(self):
 
         self.FS = 35

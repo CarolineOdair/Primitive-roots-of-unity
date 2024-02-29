@@ -33,16 +33,30 @@ class MyScene(Scene):
         self.play(Uncreate(last_dot))
 
 
-    def add_zn_boxes_animation(self, boxes:VGroup, start:int, add:int, arc_radius:float=1.5, color=WHITE):
+    def add_zn_boxes_animation(self, boxes:VGroup, start:int, add:int, arc_radius:float=None, color=WHITE, step:int=1):
 
         n = len(boxes)
+        if step <= 0:
+            raise Exception(f"`step` must be grater then 0, not {step}")
+        elif step >= n:
+            raise Exception(f"{step}>={n}, but `step` must be lower then number of `boxes`")
+        
+        if add % step != 0:
+            raise Exception(f"`add` must be multiple of `step`, but `add`({add}) % `step`({step}) == {add%step} ")
+
         start_index = start
         last_arrows = []
 
-        length_between_boxes = boxes.submobjects[1].get_top() - boxes.submobjects[0].get_top()
+        length_between_boxes = boxes.submobjects[step].get_top() - boxes.submobjects[0].get_top()
+ 
+        if arc_radius is None:
+            arc_radius = 0.9*length_between_boxes[0]
+        if length_between_boxes[0]/2 > abs(arc_radius):
+            raise Exception(f"`arc_radius`(={arc_radius}) must be greater, now it is lower then 1/2*length between boxes (={length_between_boxes[0]})")
         
-        for plus in range(add):
-            if start_index != n-1:
+        for plus in range(int(add/step)):
+            if (start_index % n) + step < n:
+                self.animation_before_the_arrow(boxes=boxes, start_box_index=start_index%n)
                 start_top = boxes.submobjects[start_index % n].get_top() + [0, 0.1, 0]
                 next_top = start_top + length_between_boxes
                 arrow = self.get_and_add_arrow(start_top, next_top, radius=-arc_radius, play=False, color=color)
@@ -52,15 +66,17 @@ class MyScene(Scene):
                 else:
                     self.play(Create(arrow))
 
-                start_index += 1
+                self.play(boxes[start_index%n+step].animate.set_stroke_color(COLOR_2))
+                start_index += step
                 last_arrows = [arrow]
 
-            elif start_index == len(boxes)-1:
+
+            elif (start_index % n) + step >= n:
                 start_1_top = boxes.submobjects[start_index % n].get_top() + [0, 0.1, 0]
                 next_1_top = start_1_top + length_between_boxes
                 arrow_1 = self.get_and_add_arrow(start_1_top, next_1_top, radius=-arc_radius, play=False, color=color)
 
-                next_2_top = boxes.submobjects[0].get_top() + [0, 0.1, 0]
+                next_2_top = boxes.submobjects[(start_index + step) % n].get_top() + [0, 0.1, 0]
                 start_2_top = next_2_top - length_between_boxes
                 arrow_2 =  self.get_and_add_arrow(start_2_top, next_2_top, radius=-arc_radius, play=False, color=color)
 
@@ -69,10 +85,31 @@ class MyScene(Scene):
                 else:
                     self.play(Create(arrow_1), Create(arrow_2))
 
-                start_index += 1
+                self.play(boxes[(start_index+step)%n].animate.set_stroke_color(COLOR_2))
+
+                start_index += step
                 last_arrows = [arrow_1, arrow_2]
 
         self.play(FadeOut(*last_arrows))
+
+
+    def animation_before_the_arrow(self, boxes, start_box_index):
+        pass
+
+    def animation_after_the_arrow(self, boxes, end_box_index):
+        pass
+
+    def get_and_add_arrow(self, start, end, radius:float=2, color=WHITE, tip_length=0.2, tip_width=0.2, play:bool=True):
+        # Play creating arc between given points
+        # Return arc
+
+        a = ArcBetweenPoints(start, end, radius=radius, color=color)
+        a.add_tip(tip_shape=StealthTip, tip_length=tip_length, tip_width=tip_width)
+
+        if play:
+            self.play(Create(a))
+
+        return a
 
 
 
