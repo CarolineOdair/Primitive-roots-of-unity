@@ -160,13 +160,13 @@ class MyScene(Scene):
 
             
 
-    def get_point_and_n_roots(self, z:complex, n:int, plane:PolarPlane, z_point_color=COLOR_1, roots_color=COLOR_2):
+    def get_point_and_n_roots(self, z:complex, n:int, plane:PolarPlane, z_point_color=COLOR_1, dot_radius:float=0.05, roots_color=COLOR_2):
 
         roots_n_of_z = self.get_n_roots_from_polar(z, n)
         z_point = Dot(plane.polar_to_point(*z), color=z_point_color, radius=0.06).set_z_index(1)
         roots_n_of_z_group = VGroup()
         for root in roots_n_of_z:
-            roots_n_of_z_group.add(Dot(plane.polar_to_point(*root), color=roots_color, radius=0.05).set_z_index(2))
+            roots_n_of_z_group.add(Dot(plane.polar_to_point(*root), color=roots_color, radius=dot_radius).set_z_index(2))
 
         return z_point, roots_n_of_z_group
 
