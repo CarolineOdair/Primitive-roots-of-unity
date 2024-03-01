@@ -23,8 +23,10 @@ class RootsAreGroup(MyScene):  # 7th scene
         self.check_3_axiom(axioms_color, roots_color, plane_obj_group, horizontal_shift)
 
 
-        self.wait(2)
-
+        ######    finish    ######
+        self.wait()
+        self.play(group_notation_group.animate.shift(3*DOWN))
+        self.play(Circumscribe(group_notation_group, color=COLOR_2))
         self.play(FadeOut(group_notation_group, plane_obj_group))
 
         self.wait(2)
