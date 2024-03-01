@@ -23,14 +23,32 @@ config.max_files_cached = 250
 ######    my scene class    ######
 class MyScene(Scene):
 
-    def clear_screen(self, obj_to_clear:VGroup, color:ManimColor=COLOR_1) -> None:
+    def clear_screen(self, obj_to_clear:VGroup=None, color:ManimColor=COLOR_1) -> None:
         if obj_to_clear is None:
-            obj_to_clear = VGroup(*self.mobjects)
+            obj_to_clear = VGroup(*self.vmobjects)
 
         last_dot = Dot(color=color)
         self.play(ReplacementTransform(obj_to_clear, last_dot))
         self.wait(0.5)
         self.play(Uncreate(last_dot))
+
+
+    def add_plane(self, azimuth_step:float=12, shiftt:Vector=0, size:float=4, radius_step:float=1, radius_max:float=3, r_values:list=[]) -> PolarPlane:
+        plane = PolarPlane(
+            azimuth_units="PI radians",
+            size=size,
+            azimuth_compact_fraction = False,
+            azimuth_step = azimuth_step,
+            radius_step = radius_step,
+            radius_max=radius_max,
+            background_line_style={
+                "stroke_color": GRID_COLOR,
+                "stroke_opacity": 0.5
+            }
+        ).add_coordinates(r_values=r_values, a_values=[]).shift(shiftt)
+
+        return plane
+    
 
 
     def add_zn_boxes_animation(self, boxes:VGroup, start:int, add:int, arc_radius:float=None, color=WHITE, step:int=1):

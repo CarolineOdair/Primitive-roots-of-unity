@@ -1,7 +1,7 @@
 from imports import *
 
 
-class RootsAreGroup(MyScene):  # 7th scene
+class RootsAreGroup(MyScene):  # 8th scene
     def construct(self):
         self.FS = 35
 
