@@ -6,7 +6,7 @@ class TaskExpl(MyScene):  # 9th scene
         self.FS = 35
 
         obj = self.display_text()
-        
+
         n = 8
         plane = self.add_plane_on_down_right(n)
 
@@ -22,7 +22,7 @@ class TaskExpl(MyScene):  # 9th scene
     def display_text(self) -> VGroup:
 
         task = Tex(r"Find all ", r"primitive ", r"$n$-th roots of unity", r".").shift(UP)
-        formula_1 = MathTex(r"w_k = \sqrt[n]{z}", color=COLOR_2).shift(2*UP)
+        formula_1 = MathTex(r"w_k = \sqrt[n]{1}", color=COLOR_2).shift(2*UP)
         formula_2 = MathTex(r"\langle w_k \rangle = E_n", color=COLOR_1)
 
 
@@ -31,12 +31,12 @@ class TaskExpl(MyScene):  # 9th scene
 
         self.play(Write(formula_1))
         self.wait()
+
         self.play(FadeToColor(task[1], color=COLOR_1))
-        
         self.play(Write(formula_2))
 
         return VGroup(task, formula_1, formula_2)
-    
+
 
     # add plane on the right of the screen
     def add_plane_on_down_right(self, n:int) -> VGroup:
@@ -44,20 +44,18 @@ class TaskExpl(MyScene):  # 9th scene
         plane = self.add_plane(azimuth_step=1, size=4, radius_max=1.5, radius_step=0.5).to_edge(DR)
         z_point, z_n_group = self.get_point_and_n_roots((1,0), n, plane, roots_color=COLOR_2, dot_radius=0.07)
 
-        self.play(Create(VGroup(plane, z_n_group)), run_time=4)
+        gr = VGroup(plane, z_n_group)
+        self.play(Create(gr), run_time=4)
         self.wait()
 
-        gr = VGroup(plane, z_n_group)
-        self.add(gr)
-
         return gr
-    
-    def animate_about_primitives(self, plane, n:int, a:int):
+
+    def animate_about_primitives(self, plane, n:int, a:int) -> None:
 
         c = COLOR_1
         z = (1, a/n*2*PI)
         z_dot = Dot(plane.polar_to_point(*z), color=c, radius=0.08).set_z_index(2)
-        z_label = MathTex(r"w_n", font_size=self.FS).next_to(z_dot, 0.5*UR)
+        z_label = MathTex(r"w_k", font_size=self.FS).next_to(z_dot, 0.5*UR)
 
         num = [z]
         points = [plane.polar_to_point(*z)]
@@ -65,7 +63,7 @@ class TaskExpl(MyScene):  # 9th scene
 
         self.play(Create(dots[-1]))
         self.play(Write(z_label))
-        
+
 
         for i in range(n-1):
             temp_num = (num[-1][0], num[-1][1]+a/n*2*PI)
@@ -84,7 +82,5 @@ class TaskExpl(MyScene):  # 9th scene
             self.play(Create(temp_dot))
             self.play(FadeOut(arrow), run_time=0.5)
 
-        
+
         self.play(FadeOut(z_label, *dots))
-
-
