@@ -51,7 +51,8 @@ class MyScene(Scene):
     
 
 
-    def add_zn_boxes_animation(self, boxes:VGroup, start:int, add:int, arc_radius:float=None, color=WHITE, step:int=1):
+    def add_zn_boxes_animation(self, boxes:VGroup, start:int, add:int, arc_radius:float=None,
+                               color:ManimColor=WHITE, step:int=1, stroke_color:ManimColor=COLOR_2):
 
         n = len(boxes)
         if step <= 0:
@@ -84,7 +85,7 @@ class MyScene(Scene):
                 else:
                     self.play(Create(arrow))
 
-                self.play(boxes[start_index%n+step].animate.set_stroke_color(COLOR_2))
+                self.play(boxes[start_index%n+step].animate.set_stroke_color(stroke_color))
                 start_index += step
                 last_arrows = [arrow]
 
@@ -103,7 +104,7 @@ class MyScene(Scene):
                 else:
                     self.play(Create(arrow_1), Create(arrow_2))
 
-                self.play(boxes[(start_index+step)%n].animate.set_stroke_color(COLOR_2))
+                self.play(boxes[(start_index+step)%n].animate.set_stroke_color(stroke_color))
 
                 start_index += step
                 last_arrows = [arrow_1, arrow_2]
@@ -133,12 +134,13 @@ class MyScene(Scene):
 
 
     def get_zn_boxes_group(self, n:int, buff_to_width_ratio:float=0.1, height_to_width_ratio:float=0.4,
-                           width:float=10, font_size:float=40, relative_position:tuple=(ORIGIN, 0)):
+                           width:float=10, font_size:float=40, relative_position:tuple=(ORIGIN, 0), 
+                           boxes_color:ManimColor=WHITE, numbers_color:ManimColor=COLOR_1):
         # Create VGroup of n boxes fitting the width of the screen with numbers from 0 to n-1 
 
         buff = width * buff_to_width_ratio
         boxes = VGroup(*[
-            Rectangle(WHITE, width=width, height=width*height_to_width_ratio).add(Text(str(i), font_size=font_size, color=COLOR_1))
+            Rectangle(boxes_color, width=width, height=width*height_to_width_ratio).add(Text(str(i), font_size=font_size, color=numbers_color))
             for i in range(n)
         ])
 
