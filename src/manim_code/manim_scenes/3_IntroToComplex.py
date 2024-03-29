@@ -4,7 +4,7 @@ from math import sqrt
 
 
 
-class ComplexNumbers(Scene):  # 3rd scene
+class S3_ComplexNumbers(Scene):  # 3rd scene
 
     def construct(self):
 

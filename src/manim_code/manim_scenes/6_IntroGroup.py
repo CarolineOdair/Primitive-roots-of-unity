@@ -1,6 +1,6 @@
 from imports import *
 
-class IntroGroupDef(MovingCameraScene):  # 6th scene
+class S6_IntroGroup(MovingCameraScene):  # 6th scene
     # Some functions are copied from MyScene class
     # They have to be defined here because IntroGroupDef class 
     # inherits from MovingCameraScene, not MyScene
@@ -215,7 +215,8 @@ class IntroGroupDef(MovingCameraScene):  # 6th scene
         ax_3 = MathTex(r"\forall_{a\in G}\;\; \exists_{a^{-1}\in G}\quad a*a^{-1}=a^{-1}*a=e")  # Inverse element
 
         axioms_vgroup = VGroup(ax_0, ax_1, ax_2, ax_3).arrange(direction=DOWN, aligned_edge=LEFT).to_edge(UL)
-        self.play(Write(axioms_vgroup))
+        self.play(AnimationGroup(*[Write(p) for p in axioms_vgroup], lag_ratio=4))
+        # self.play(Write(axioms_vgroup))
 
         return axioms_vgroup
 

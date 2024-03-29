@@ -1,6 +1,6 @@
 from imports import *
 
-class IntroduceProblem(MyScene):  # 2nd scene
+class S2_IntroduceProblem(MyScene):  # 2nd scene
     def construct(self):
 
         problem_text = Tex("Find all primitive $n$-th roots of unity.").scale(1)

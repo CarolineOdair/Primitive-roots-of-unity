@@ -1,6 +1,6 @@
 from imports import *
 
-class ProblemSolver(MyScene):  # 11th scene
+class S11_ProblemSolver(MyScene):  # 11th scene
     def construct(self):
         self.FS = 35
 

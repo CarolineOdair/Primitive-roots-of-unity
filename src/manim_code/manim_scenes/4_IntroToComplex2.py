@@ -1,7 +1,7 @@
 from imports import *
 
 
-class MultiplyingComplex(MyScene):  # 4th scene
+class S4_MultiplyingComplex(MyScene):  # 4th scene
     def construct(self):
         Z = (2, PI/6)
         W = (1.5, 7*PI/6)

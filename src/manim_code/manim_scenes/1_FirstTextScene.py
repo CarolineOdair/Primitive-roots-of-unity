@@ -1,6 +1,6 @@
 from imports import *
 
-class DisplayAndRemoveText(MyScene):  # 1st scene
+class S1_FirstTextScene(MyScene):  # 1st scene
     def construct(self):
         
         TEXT = Text('"Matematyka to ładne warzywo"').scale(0.5)

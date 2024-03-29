@@ -1,7 +1,7 @@
 from imports import *
 
 
-class RootsAreGroup(MyScene):  # 8th scene
+class S8_ProofComplexIsGroup(MyScene):  # 8th scene
     def construct(self):
         self.FS = 35
 

@@ -1,7 +1,7 @@
 from imports import *
 
 
-class ShowComplexAndZnSimilarity(MyScene):  # 10th scene
+class S10_ShowComplexAndZnSimilarity(MyScene):  # 10th scene
     def construct(self):
         self.FS = 35
 

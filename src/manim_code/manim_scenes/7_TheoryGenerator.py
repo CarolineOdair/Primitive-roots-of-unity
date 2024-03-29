@@ -1,7 +1,7 @@
 from imports import *
 
 
-class GeneratorDef(MyScene):  # 7th scene
+class S7_GeneratorDef(MyScene):  # 7th scene
     def construct(self):
         self.FS = 35
 

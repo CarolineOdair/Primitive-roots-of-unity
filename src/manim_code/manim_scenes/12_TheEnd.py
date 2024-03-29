@@ -1,6 +1,6 @@
 from imports import *
 
-class Finish(MyScene):  # 12th scene
+class S12_Finish(MyScene):  # 12th scene
     def construct(self):
         
         task = Tex(r"Find all ", r"primitive ", r"$n$-th roots of unity", r".").shift(2*UP)

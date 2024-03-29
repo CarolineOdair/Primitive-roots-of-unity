@@ -1,7 +1,7 @@
 from imports import *
 
 
-class TaskExpl(MyScene):  # 9th scene
+class S9_TaskExpl(MyScene):  # 9th scene
     def construct(self):
         self.FS = 35
 
