@@ -16,11 +16,6 @@ class ShowComplexAndZnSimilarity(MyScene):  # 10th scene
         self.wait(5)
 
 
-
-    def set_color_method(self, tex:MathTex, indexes:list, color:ManimColor) -> None:
-        for i in indexes:
-            tex[i[0]][i[1]].set_color(color)
-
     def multiply_complex_part(self) -> MathTex:
         n_color = COLOR_3
         m_color = COLOR_2

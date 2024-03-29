@@ -32,6 +32,10 @@ class MyScene(Scene):
         self.wait(0.5)
         self.play(Uncreate(last_dot))
 
+    def set_color_method(self, tex:MathTex, indexes:list, color:ManimColor) -> None:
+        for i in indexes:
+            tex[i[0]][i[1]].set_color(color)
+
 
     def add_plane(self, azimuth_step:float=12, shiftt:Vector=0, size:float=4, radius_step:float=1, radius_max:float=3, r_values:list=[]) -> PolarPlane:
         plane = PolarPlane(

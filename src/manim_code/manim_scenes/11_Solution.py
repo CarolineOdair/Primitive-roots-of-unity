@@ -54,11 +54,6 @@ class ProblemSolver(MyScene):  # 11th scene
         self.set_color_method(k_text, [(0,0)], self.k_color)
         self.set_color_method(if_equal_text, [(0,-1)], self.n_color)
         self.set_color_method(if_equal_text, [(0,1)], self.k_color)
-
-    
-    def set_color_method(self, tex:MathTex, indexes:list, color:ManimColor) -> None:
-        for i in indexes:
-            tex[i[0]][i[1]].set_color(color)
     
     
     def intro_to_solution_2_base_cases(self):
