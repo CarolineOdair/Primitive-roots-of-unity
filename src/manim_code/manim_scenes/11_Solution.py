@@ -27,7 +27,7 @@ class S11_ProblemSolver(MyScene):  # 11th scene
         self.play(Write(n_text))
         self.wait()
 
-        e1_group_text = MathTex(r"E_1 = \{ w_0 \}").next_to(n_text, 1.5*DOWN)
+        e1_group_text = MathTex(r"E_1 = \{ 1 \}").next_to(n_text, 1.5*DOWN)
         self.play(Write(e1_group_text))
         self.wait()
         self.play(Unwrite(e1_group_text))
@@ -75,48 +75,21 @@ class S11_ProblemSolver(MyScene):  # 11th scene
         self.wait()
         self.play(FadeOut(l_case_1))
 
-        k = 0
-        case_0 = MathTex(rf"k = {k}").shift(1.5*UP)
-        case_1 = MathTex(rf"{k}^m = {k}")
-        self.set_color_method(case_0, [(0,0)], self.k_color)
-        self.play(Write(case_0))
-        self.play(Write(case_1))
-        self.wait()
-        self.play(Unwrite(case_0), Unwrite(case_1))
-
-        k = 1
-        case_0 = MathTex(rf"k = {k}").shift(1.5*UP)
-        case_1 = MathTex(rf"{k}^m = m \text{{ mod }} n")
-        self.set_color_method(case_0, [(0,0)], self.k_color)
-        self.set_color_method(case_1, [(0,-1)], self.n_color)
-        self.play(Write(case_0))
-        self.play(Write(case_1))
-        self.wait()
-        self.play(Unwrite(case_0), Unwrite(case_1))
-
         self.play(FadeOut(m_text))
 
 
     def intro_to_solution_hit_1_ends_circle(self):
 
-        boxes_0 = self.get_zn_boxes_group(6, relative_position=(ORIGIN, 0), font_size=self.FS*4)
-        boxes_1 = self.get_zn_boxes_group(6, relative_position=(ORIGIN, 2*DOWN), font_size=self.FS*4)
+        boxes = self.get_zn_boxes_group(6, font_size=self.FS*4).shift(DOWN)
 
-        self.play(Create(boxes_0))
-        self.play(Create(boxes_1))
+        self.play(Create(boxes))
 
-        self.add_zn_boxes_animation(boxes_0, 2, 4, step=2)
-
-        self.play(boxes_1[0].animate.set_stroke_color(COLOR_2))
-        self.play(boxes_0[0].animate.set_fill(COLOR_2, opacity=0.2), boxes_1[0].animate.set_fill(COLOR_2, opacity=0.2))
-
-        arrow_0 = self.get_arrow_from_0_to_2(boxes_0)
-        arrow_1 = self.get_arrow_from_0_to_2(boxes_1)
-
-        self.play(Create(arrow_0), Create(arrow_1))
+        self.add_zn_boxes_animation(boxes, 2, 4, step=2, color=COLOR_1)
+        self.wait(2)
+        self.add_zn_boxes_animation(boxes, 0, 4, step=2, color=COLOR_1)
 
         self.wait(1)
-        self.play(*[FadeOut(el) for el in [arrow_0, arrow_1, boxes_0, boxes_1]], run_time=5)
+        self.play(FadeOut(boxes), run_time=2)
 
 
     def solution_part_1(self):
@@ -149,50 +122,13 @@ class S11_ProblemSolver(MyScene):  # 11th scene
         self.play(FadeOut(implication_to_not_zn_expl))
 
         self.play(TransformMatchingTex(implication_to_not_zn_questioned, implication_to_not_zn))
-
-        # implication_to_zn = MathTex(r"\min\{ c\in\mathbb{N}: k^c=0 \} = n \quad\implies\quad \langle k \rangle = \mathbb{Z}_n ").shift(DOWN)
-        # self.set_color_method(implication_to_zn, [(0,8), (0,18)], self.k_color)
-        # self.set_color_method(implication_to_zn, [(0,14), (0,-1)], self.n_color)
-        # self.play(Write(implication_to_zn))
-
-        # implication_to_zn_expl = MathTex(r"\min\{ c\in\mathbb{N}: k^c=0 \} = n \quad\implies\quad |\langle k \rangle| = n").shift(2*DOWN)
-        # self.set_color_method(implication_to_zn_expl, [(0,8), (0,19)], self.k_color)
-        # self.set_color_method(implication_to_zn_expl, [(0,14), (0,-1)], self.n_color)
-        # self.play(Write(implication_to_zn_expl))
-        # self.wait()
-        # self.play(FadeOut(implication_to_zn_expl))
-
-        # implication_false = MathTex(r"\min\{ c\in\mathbb{N}: k^c=0 \} > n \quad").shift(2*DOWN)
-        # self.set_color_method(implication_false, [(0,8)  ], self.k_color)
-        # self.set_color_method(implication_false, [(0,-1)], self.n_color)
-        # self.play(Write(implication_false))
-        
-        # implication_false_expl = MathTex(r"k^n = k\cdot n \text{ mod } n = 0").shift(3*DOWN)
-        # self.set_color_method(implication_false_expl, [(0,0), (0,3)], self.k_color)
-        # self.set_color_method(implication_false_expl, [(0,1), (0,5), (0,10)], self.n_color)
-        # self.play(Write(implication_false_expl))
-        # cross = Cross(mobject=implication_false)
-        # self.play(Create(cross))
-        # self.play(FadeOut(cross))
-        # self.wait()
-        # self.play(FadeOut(implication_false_expl))
-        # self.play(FadeOut(implication_false))
-
-
         self.wait()
         self.play(FadeOut(k_text), FadeOut(m_text))
-
 
         implication_to_not_zn_with_b = MathTex(r"b=", r"\min\{ c\in\mathbb{N}: k^c=0 \}", r"< n \quad", r"\implies", r"\quad \langle k \rangle \neq \mathbb{Z}_n ")
         self.set_color_method(implication_to_not_zn_with_b, [(1,8), (-1,1)], self.k_color)
         self.set_color_method(implication_to_not_zn_with_b, [(2,-1), (-1,-1)], self.n_color)
         self.play(TransformMatchingTex(implication_to_not_zn, implication_to_not_zn_with_b))
-
-        # implication_to_zn_with_b = MathTex(r"b=", r"\min\{ c\in\mathbb{N}: k^c=0 \} = n \quad\implies\quad \langle k \rangle = \mathbb{Z}_n ").shift(DOWN)
-        # self.set_color_method(implication_to_zn_with_b, [(1,8), (1,18)], self.k_color)
-        # self.set_color_method(implication_to_zn_with_b, [(1,14), (1,-1)], self.n_color)
-        # self.play(TransformMatchingTex(implication_to_zn, implication_to_zn_with_b))
-
 
         return implication_to_not_zn_with_b
 
@@ -201,9 +137,9 @@ class S11_ProblemSolver(MyScene):  # 11th scene
 
         self.play(implies_not_zn.animate.shift(1.5*UP))
 
-        not_rel_prime_expl = MathTex(r"k^b", r"=k\cdot &b", r"=l\cdot n\\", r"n|&kb\\", r"\gcd(n,&k) \neq 1")
-        self.set_color_method(not_rel_prime_expl, [(0,0), (1,1), (3,2), (4,6)], self.k_color)
-        self.set_color_method(not_rel_prime_expl, [(2,-1), (3,0), (4,4)], self.n_color)
+        not_rel_prime_expl = MathTex(r"k^b &= l\cdot n \mod n\\", r"k\cdot b\mod n", r"&=l\cdot n \mod n\\", r"kb &= ln\\", r"n&|kb\\", r"\gcd(n,k) &\neq 1").shift(DOWN)
+        self.set_color_method(not_rel_prime_expl, [(0,0), (1,0), (3,0), (4,2), (5,6)], self.k_color)
+        self.set_color_method(not_rel_prime_expl, [(0, 5), (0, -1), (1,-1), (2,3), (2,-1), (3,-1), (4,0), (5,4)], self.n_color)
         self.play(AnimationGroup(*[Write(p) for p in not_rel_prime_expl], lag_ratio=1))
         self.play(FadeOut(not_rel_prime_expl))
 
@@ -217,7 +153,6 @@ class S11_ProblemSolver(MyScene):  # 11th scene
         self.play(FadeOut(implies_not_zn), FadeOut(not_rel_prime))
 
 
-
         # now we want to show that only k relatively prime to n can generate Z_n group
         rel_prime = MathTex(r"\gcd(n,k) = 1", r"\quad\implies\quad", r"\langle k \rangle = \mathbb{Z}_n").shift(1.5*UP)
         self.set_color_method(rel_prime, [(0,6), (2,1)], self.k_color)
@@ -228,6 +163,14 @@ class S11_ProblemSolver(MyScene):  # 11th scene
         self.set_color_method(rel_prime_contr, [(0,6), (2,1)], self.k_color)
         self.set_color_method(rel_prime_contr, [(0,4), (2,-1)], self.n_color)
         self.play(TransformMatchingTex(rel_prime, rel_prime_contr))
+
+        self.play(Write(not_rel_prime))
+        self.play(Circumscribe(VGroup(rel_prime_contr, not_rel_prime), time_width=5, buff=MED_SMALL_BUFF, color=COLOR_3))
+        self.wait(2)
+        self.play(Unwrite(not_rel_prime))
+        self.wait()
+
+
 
         rel_prime_expl = MathTex(r"a\in\mathbb{N}&,\; a<n\\", r"k^a &= 0\\", r"a\cdot k &= n\cdot l\\", r"n&|ak\\", r"n&|a").shift(DOWN)
         self.set_color_method(rel_prime_expl, [(1,0), (2,2), (3,-1)], self.k_color)
@@ -242,14 +185,6 @@ class S11_ProblemSolver(MyScene):  # 11th scene
         self.play(Write(not_rel_prime))
 
         return rel_prime, not_rel_prime
-
-
-
-
-
-
-
-
 
 
     def animation_before_the_arrow(self, boxes, start_box_index):
