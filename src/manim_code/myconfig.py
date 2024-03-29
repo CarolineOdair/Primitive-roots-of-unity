@@ -134,7 +134,7 @@ class MyScene(Scene):
 
 
     def get_zn_boxes_group(self, n:int, buff_to_width_ratio:float=0.1, height_to_width_ratio:float=0.4,
-                           width:float=10, font_size:float=40, relative_position:tuple=(ORIGIN, 0), 
+                           width:float=10, font_size:float=140, relative_position:tuple=(ORIGIN, 0), 
                            boxes_color:ManimColor=WHITE, numbers_color:ManimColor=COLOR_1):
         # Create VGroup of n boxes fitting the width of the screen with numbers from 0 to n-1 
 
