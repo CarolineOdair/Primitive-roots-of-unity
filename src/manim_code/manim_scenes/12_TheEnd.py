@@ -8,7 +8,7 @@ class S12_Finish(MyScene):  # 12th scene
         line_gradient.set_color(color=[COLOR_2, COLOR_2, COLOR_1, COLOR_1])
         self.play(Write(task), Create(line_gradient))
 
-        solution = MathTex(r"\langle w_k \rangle = E_n", r"\quad\iff\quad", r"\gcd(n,k)=1")
+        solution = MathTex(r"\langle \varepsilon_k \rangle = E_n", r"\quad\iff\quad", r"\gcd(n,k)=1")
         solution[0].set_color(COLOR_1)
         solution[2].set_color(COLOR_2)
 

@@ -26,7 +26,7 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
         ######    finish    ######
         self.wait()
         self.play(group_notation_group.animate.shift(3*DOWN))
-        self.play(Circumscribe(group_notation_group, color=COLOR_2))
+        self.play(Circumscribe(group_notation_group, color=COLOR_2, buff=MED_SMALL_BUFF))
         self.play(FadeOut(group_notation_group, plane_obj_group))
 
         self.wait(2)
@@ -84,7 +84,7 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
     # manage 0 axiom - inner
     def check_0_axiom(self, theory_color:ManimColor, example_color:ManimColor, plane_vgr:VGroup, hor_position:Vector=ORIGIN) -> None:
         theory = MathTex(r"\forall_{a,b\in G}\quad a*b\in G", color=theory_color, font_size=self.FS+10).shift(1.5*UP)
-        example = MathTex(r"\forall_{w_k, w_l\in E_n}\quad w_k\cdot w_l &=", 
+        example = MathTex(r"\forall_{\varepsilon_k, \varepsilon_l\in E_n}\quad \varepsilon_k\cdot \varepsilon_l &=", 
                           r"e^{\imath 2k\pi/n}\cdot e^{\imath 2l\pi/n}\\",
                           r"&= e^{\imath 2 (k+l) \pi /n}\\",
                           r"k+l\in\mathbb{Z}",
@@ -105,9 +105,9 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
         w_point = Dot(plane.polar_to_point(*w), color=COLOR_1, radius=0.08).set_z_index(2)
         z_w_point = Dot(plane.polar_to_point(1, z[1]+w[1]), color=COLOR_1, radius=0.08).set_z_index(2)
 
-        z_label = MathTex(r"w_k", font_size=self.FS).next_to(z_point, 0.5*UL)
-        w_label = MathTex(r"w_l", font_size=self.FS).next_to(w_point, 0.5*DR)
-        z_w_label = MathTex(r"w_k\cdot w_l", font_size=self.FS).next_to(z_w_point, 0.2*UR)
+        z_label = MathTex(r"\varepsilon_k", font_size=self.FS).next_to(z_point, 0.5*UL)
+        w_label = MathTex(r"\varepsilon_l", font_size=self.FS).next_to(w_point, 0.5*DR)
+        z_w_label = MathTex(r"\varepsilon_k\cdot \varepsilon_l", font_size=self.FS).next_to(z_w_point, 0.2*UR)
 
         self.play(AnimationGroup(*[Create(VGroup(z_point, z_label)), 
                                    Create(VGroup(w_point, w_label)), 
@@ -122,17 +122,17 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
     # manage 1 axiom - associativity
     def check_1_axiom(self, theory_color:ManimColor, example_color:ManimColor, plane_vgr:VGroup, hor_position:Vector=ORIGIN) -> None:
         theory = MathTex(r"\forall_{a,b,c\in G}\quad (a*b)*c = a*(b*c)", color=theory_color, font_size=self.FS+10).shift(2*UP)
-        example = MathTex(r"(w_k\cdot w_l)\cdot w_m &=", 
+        example = MathTex(r"(\varepsilon_k\cdot \varepsilon_l)\cdot \varepsilon_m &=", 
                           r"(e^{\imath 2k\pi/n}\cdot e^{\imath 2l\pi/n})\cdot e^{\imath 2m\pi/n} \\", 
                           r"&= e^{\imath 2 (k+l) \pi /n}\cdot e^{\imath 2m\pi /n} \\",
                           r"&= e^{\imath 2 ((k+l)+m) \pi /n} \\", 
                           r"&= e^{\imath 2 (k+(l+m)) \pi /n} \\",
                           r"&= e^{\imath 2k\pi /n}\cdot e^{\imath 2(k+m)\pi /n} \\",
                           r"&= e^{\imath 2k\pi/n}\cdot (e^{\imath 2l\pi/n}\cdot e^{\imath 2m\pi/n}) \\",
-                          r"&= w_k\cdot (w_l\cdot w_m) ", 
+                          r"&= \varepsilon_k\cdot (\varepsilon_l\cdot \varepsilon_m) ", 
                           color=example_color, font_size=self.FS+10).shift(1.3*DOWN)
-        example_short = MathTex(r"(w_k\cdot w_l)\cdot w_m &=", 
-                          r"w_k\cdot (w_l\cdot w_m)", 
+        example_short = MathTex(r"(\varepsilon_k\cdot \varepsilon_l)\cdot \varepsilon_m &=", 
+                          r"\varepsilon_k\cdot (\varepsilon_l\cdot \varepsilon_m)", 
                           color=example_color, font_size=self.FS+10).shift(hor_position+0.5*UP)
         vgr = VGroup(theory, example).shift(hor_position)
 
@@ -149,8 +149,8 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
     # manage 2 axiom - identity element
     def check_2_axiom(self, theory_color:ManimColor, example_color:ManimColor, plane_vgr:VGroup, hor_position:Vector=ORIGIN) -> None:
         theory = MathTex(r"\exists_{e\in G}\;\; \forall_{a\in G}\quad a*e=e*a=a", color=theory_color, font_size=self.FS+10).shift(UP)
-        example = MathTex(r"w_k\cdot 1 &=",
-                          r"1 \cdot w_k = w_k", 
+        example = MathTex(r"\varepsilon_k\cdot 1 &=",
+                          r"1 \cdot \varepsilon_k = \varepsilon_k", 
                           color=example_color, font_size=self.FS+10)
         vgr = VGroup(theory, example).shift(hor_position)
 
@@ -165,7 +165,7 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
     # manage 3 axiom - inverse element
     def check_3_axiom(self, theory_color:ManimColor, example_color:ManimColor, plane_vgr:VGroup, hor_position:Vector=ORIGIN) -> None:
         theory = MathTex(r"\forall_{a\in G}\;\; \exists_{a^{-1}\in G}\quad a*a^{-1}=a^{-1}*a=e", color=theory_color, font_size=self.FS+10).shift(2*UP)
-        example = MathTex(r"w_k\cdot w_l &= 1\\",
+        example = MathTex(r"\varepsilon_k\cdot \varepsilon_l &= 1\\",
                           r"e^{\imath 2k\pi /n}\cdot e^{\imath 2l\pi /n} &= e^{\imath 0\pi /n}\\",
                           r"e^{\imath 2(k+l)\pi /n} &= e^{\imath 0\pi /n}\\",
                           r"2(k+l) &= 0\\",
@@ -189,9 +189,9 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
         w_point = Dot(plane.polar_to_point(*w), color=COLOR_1, radius=0.08).set_z_index(2)
         z_w_point = Dot(plane.polar_to_point(1, z[1]+w[1]), color=COLOR_1, radius=0.08).set_z_index(2)
 
-        z_label = MathTex(r"w_k", font_size=self.FS).next_to(z_point, 0.5*UL)
-        w_label = MathTex(r"w_l=w_{-k+n}", font_size=self.FS).next_to(w_point, 0.5*DL)
-        z_w_label = MathTex(r"w_k\cdot w_l=1", font_size=self.FS).next_to(z_w_point, 0.2*UR)
+        z_label = MathTex(r"\varepsilon_k", font_size=self.FS).next_to(z_point, 0.5*UL)
+        w_label = MathTex(r"\varepsilon_l = \varepsilon_{-k+n}", font_size=self.FS).next_to(w_point, 0.5*DL)
+        z_w_label = MathTex(r"\varepsilon_k\cdot \varepsilon_l = 1", font_size=self.FS).next_to(z_w_point, 0.2*UP)
 
         self.play(AnimationGroup(*[Create(VGroup(z_point, z_label)), 
                                    Create(VGroup(w_point, w_label)), 

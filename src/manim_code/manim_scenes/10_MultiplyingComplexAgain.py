@@ -56,7 +56,7 @@ class S10_ShowComplexAndZnSimilarity(MyScene):  # 10th scene
         return en_group_text, zn_group_text
 
     def get_wk_wl_formula(self, k_color, m_color, n_color) -> MathTex:
-        roots = MathTex(r"w_k,w_m\in E_n\qquad k,m\in\mathbb{Z}_n", font_size=self.FS+10).shift(1.5*UP)
+        roots = MathTex(r"\varepsilon_k, \varepsilon_m\in E_n\qquad k,m\in\mathbb{Z}_n", font_size=self.FS+10).shift(1.5*UP)
         self.set_color_method(roots, [(0,1),(0,8)], k_color)
         self.set_color_method(roots, [(0,4),(0,-4)], m_color)
         self.set_color_method(roots, [(0,7),(0,-1)], n_color)
@@ -64,11 +64,11 @@ class S10_ShowComplexAndZnSimilarity(MyScene):  # 10th scene
         return roots
     
     def get_expl_formula(self, k_color, m_color, n_color) -> MathTex:
-        formula = MathTex(r"w_k \cdot w_m &=", 
+        formula = MathTex(r"\varepsilon_k \cdot \varepsilon_m &=", 
                           r"e^{\imath 2\pi \frac{k}{n}} \cdot e^{\imath 2\pi \frac{m}{n}}=",
                           r"e^{\imath 2\pi \frac{k+m}{n}}=\\",
                           r"&= e^{\imath 2\pi \frac{k+_nm}{n}}=",
-                          r"w_{k+_nm}",
+                          r"\varepsilon_{k+_nm}",
                           font_size=self.FS+20).shift(0.5*DOWN)
         
         self.set_color_method(formula, [(0,1),(1,4),(2,4),(3,5),(4,1)], k_color)
@@ -78,7 +78,7 @@ class S10_ShowComplexAndZnSimilarity(MyScene):  # 10th scene
         return formula
     
     def get_end_expl_formula(self, k_color, m_color, n_color) -> MathTex:
-        formula = MathTex(r"w_k \cdot w_m =", r"w_{k+_nm}", font_size=self.FS+20)
+        formula = MathTex(r"\varepsilon_k \cdot \varepsilon_m =", r"\varepsilon_{k+_nm}", font_size=self.FS+20)
         self.set_color_method(formula, [(0,1),(1,1)], k_color)
         self.set_color_method(formula, [(0,4),(1,-1)], m_color)
         self.set_color_method(formula, [(1,3)], n_color)
@@ -91,7 +91,7 @@ class S10_ShowComplexAndZnSimilarity(MyScene):  # 10th scene
         self.boxes_settings(boxes)
         self.play(Create(boxes))
 
-        en_expression = MathTex(r"(w_2)^3 = w_2 \cdot w_2 \cdot w_2").shift(2*UP+3*LEFT)
+        en_expression = MathTex(r"(\varepsilon_2)^3 = \varepsilon_2 \cdot \varepsilon_2 \cdot \varepsilon_2").shift(2*UP+3*LEFT)
         zn_expression = MathTex(r"2^3 = 2+_6 2+_6 2 ").shift(2*UP+3*RIGHT)
         self.play(Write(en_expression), Write(zn_expression))
 
@@ -103,7 +103,7 @@ class S10_ShowComplexAndZnSimilarity(MyScene):  # 10th scene
 
     def add_last_expressions_and_frameboxes(self, en_prev, zn_prev):
 
-        en_expression_1 = MathTex(r"(w_2)^3 = w_2 \cdot w_2 \cdot w_2", r"= w_0").shift(2*UP+3*LEFT)
+        en_expression_1 = MathTex(r"(\varepsilon_2)^3 = \varepsilon_2 \cdot \varepsilon_2 \cdot \varepsilon_2", r"= \varepsilon_0").shift(2*UP+3*LEFT)
         zn_expression_1 = MathTex(r"2^3 = 2+_6 2+_6 2", r"=0").shift(2*UP+3*RIGHT)
         self.play(TransformMatchingTex(en_prev, en_expression_1), TransformMatchingTex(zn_prev, zn_expression_1))
     
@@ -136,7 +136,7 @@ class S10_ShowComplexAndZnSimilarity(MyScene):  # 10th scene
         self.wait()
 
         for index, pos in zip(range(len(z_n_group)), [UR, UR, UL, UL, DL, DR]):
-            label = MathTex(r"w_", rf"{index}").next_to(z_n_group[index], 0.5*pos)
+            label = MathTex(r"\varepsilon_", rf"{index}").next_to(z_n_group[index], 0.5*pos)
             self.play(Write(label))
 
         return gr

@@ -22,8 +22,8 @@ class S9_TaskExpl(MyScene):  # 9th scene
     def display_text(self) -> VGroup:
 
         task = Tex(r"Find all ", r"primitive ", r"$n$-th roots of unity", r".").shift(UP)
-        formula_1 = MathTex(r"w_k = \sqrt[n]{1}", color=COLOR_2).shift(2*UP)
-        formula_2 = MathTex(r"\langle w_k \rangle = E_n", color=COLOR_1)
+        formula_1 = MathTex(r"\varepsilon_k = \sqrt[n]{1}", color=COLOR_2).shift(2*UP)
+        formula_2 = MathTex(r"\langle \varepsilon_k \rangle = E_n", color=COLOR_1)
 
 
         self.play(Write(task))
@@ -55,7 +55,7 @@ class S9_TaskExpl(MyScene):  # 9th scene
         c = COLOR_1
         z = (1, a/n*2*PI)
         z_dot = Dot(plane.polar_to_point(*z), color=c, radius=0.08).set_z_index(2)
-        z_label = MathTex(r"w_k", font_size=self.FS).next_to(z_dot, 0.5*UR)
+        z_label = MathTex(r"\varepsilon_k", font_size=self.FS).next_to(z_dot, 0.5*UR)
 
         num = [z]
         points = [plane.polar_to_point(*z)]
