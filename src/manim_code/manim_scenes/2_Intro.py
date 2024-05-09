@@ -19,7 +19,6 @@ class S2_IntroduceProblem(MyScene):  # 2nd scene
 
         plan = [Text(text).set_opacity(0.5) for text in plan]
 
-        # TODO probably positioning needs to be changed
         group = VGroup(*plan).arrange(DOWN).scale(0.65).next_to(problem_text.get_bottom(), 2.5*DOWN)
         self.play(Write(group))
 
@@ -31,4 +30,4 @@ class S2_IntroduceProblem(MyScene):  # 2nd scene
             obj.set_opacity(0.5)
 
 
-        self.wait(1)
+        self.wait(3)

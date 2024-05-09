@@ -138,7 +138,6 @@ class S5_ComplexRoots(MyScene):  # 5th scene
         self.show_transform_and_fadeout_expl(formula_number_ch, start=2, end=4, fade_out=False)
         self.show_transform_and_fadeout_expl(formula_roots_list_ch, start=1, end=4, fade_out=False)
 
-        self.wait(2)
         # phi = 0 change
         self.show_transform_and_fadeout_expl(formula_number_ch, start=4, fade_out=False)
         self.show_transform_and_fadeout_expl(formula_roots_list_ch, start=4, fade_out=False)
@@ -172,7 +171,7 @@ class S5_ComplexRoots(MyScene):  # 5th scene
             # roots_formula = Tex(text, font_size=FS, tex_environment="center").next_to(plane.get_top(), 0.5*UP)
             # self.add(roots_formula)
 
-            z_point, z_n_group = self.get_point_and_n_roots(z, n, plane, dot_radius=0.1, z_dot_radius=0.12)
+            z_point, z_n_group = self.get_point_and_n_roots(z, n, plane, dot_radius=0.1, z_dot_radius=0.12, z_point_color=COLOR_2, roots_color=COLOR_1)
             # self.add_and_remove_point_and_n_roots(z_point, z_n_group)
 
             # self.remove(roots_formula)
