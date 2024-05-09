@@ -17,7 +17,7 @@ GRID_COLOR = GREY
 
 ######    config    ######
 config.background_color = NAVY_BLUE
-config.max_files_cached = 250
+config.max_files_cached = 500
 
 
 ######    my scene class    ######
@@ -159,7 +159,7 @@ class MyScene(Scene):
     
 
 
-    def show_transform_and_fadeout_expl(self, list_of_formulas, start:int=0, end:int=None, fade_out:bool=True, circumscribe:bool=False, transform_goal=None) -> None:
+    def show_transform_and_fadeout_expl(self, list_of_formulas, start:int=0, end:int=None, fade_out:bool=True, circumscribe:bool=False, transform_goal=None, time_between_transform=1) -> None:
 
         length = len(list_of_formulas)
         if end is None or end > length:
@@ -170,6 +170,7 @@ class MyScene(Scene):
             if l == 0:
                 self.play(Write(list_of_formulas[l]))
             elif l > 0 and l < end:
+                self.wait(time_between_transform)
                 self.play(TransformMatchingTex(list_of_formulas[l-1], list_of_formulas[l]))
 
 
@@ -184,10 +185,10 @@ class MyScene(Scene):
 
             
 
-    def get_point_and_n_roots(self, z:complex, n:int, plane:PolarPlane, z_point_color=COLOR_1, dot_radius:float=0.05, roots_color=COLOR_2):
+    def get_point_and_n_roots(self, z:complex, n:int, plane:PolarPlane, z_point_color=COLOR_1, dot_radius:float=0.05, z_dot_radius:float=0.06, roots_color=COLOR_2):
 
         roots_n_of_z = self.get_n_roots_from_polar(z, n)
-        z_point = Dot(plane.polar_to_point(*z), color=z_point_color, radius=0.06).set_z_index(1)
+        z_point = Dot(plane.polar_to_point(*z), color=z_point_color, radius=z_dot_radius).set_z_index(1)
         roots_n_of_z_group = VGroup()
         for root in roots_n_of_z:
             roots_n_of_z_group.add(Dot(plane.polar_to_point(*root), color=roots_color, radius=dot_radius).set_z_index(2))

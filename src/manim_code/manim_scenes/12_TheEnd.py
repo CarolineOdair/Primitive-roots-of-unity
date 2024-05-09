@@ -5,7 +5,9 @@ class S12_Finish(MyScene):  # 12th scene
         
         task = Tex(r"Find all ", r"primitive ", r"$n$-th roots of unity", r".").shift(2*UP)
         line_gradient = Line(task.get_corner(DL), task.get_corner(DR))
-        line_gradient.set_color(color=[COLOR_2, COLOR_2, COLOR_1, COLOR_1])
+        # line_gradient.set_color(color=[COLOR_2, COLOR_2, COLOR_1, COLOR_1])
+        line_gradient.set_color(color=[COLOR_2, COLOR_1])
+
         self.play(Write(task), Create(line_gradient))
 
         solution = MathTex(r"\langle \varepsilon_k \rangle = E_n", r"\quad\iff\quad", r"\gcd(n,k)=1")

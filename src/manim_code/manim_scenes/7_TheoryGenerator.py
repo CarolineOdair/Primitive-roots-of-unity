@@ -90,6 +90,7 @@ class S7_GeneratorDef(MyScene):  # 7th scene
         temp_group_ex = MathTex(r"(\mathbb{Z}, +)").shift(1.5*UP)
         underline = Underline(temp_group_ex, color=c)
         self.play(FadeIn(temp_group_ex), Create(underline))
+        self.wait(2)
 
 
         # Animate powers - explanation
@@ -102,8 +103,10 @@ class S7_GeneratorDef(MyScene):  # 7th scene
         ]
         power_ex = [MathTex(*text) for text in power_ex]
         power_ex_group = VGroup(*power_ex).arrange(direction=DOWN).move_to(DOWN)
-        for el in power_ex_group:
+        wait_list = [7, 3, 1, 1, 1]
+        for i, el in enumerate(power_ex_group):
             self.play(Write(el))
+            self.wait(wait_list[i])
         self.play(Uncreate(power_ex_group))
 
 
@@ -127,13 +130,18 @@ class S7_GeneratorDef(MyScene):  # 7th scene
         self.play(Create(power_ex_table))
         self.wait()
         self.play(TransformMatchingShapes(power_ex_table, power_ex_table_2))
+        self.wait(3)
         self.play(TransformMatchingShapes(power_ex_table_2, power_ex_table_3))
+        self.wait(3)
         self.play(TransformMatchingShapes(power_ex_table_3, power_ex_table_4))
+        self.wait(3.5)
 
         # 2 is not a generator
         generator_2 = MathTex(r"\langle", r"2", r"\rangle =", r"2", r"\mathbb{Z}").next_to(temp_group_ex, 1.5*DOWN)
         self.play(Write(generator_2))
+        self.wait()
         self.play(Circumscribe(generator_2, color=COLOR_1))
+        self.wait()
 
         # generator change tex `<a> = aZ`
         generator = [
@@ -148,6 +156,7 @@ class S7_GeneratorDef(MyScene):  # 7th scene
 
         self.show_transform_and_fadeout_expl(generator, start=1, end=2, fade_out=False)
         self.play(FadeOut(power_ex_table_4))
+        self.wait(3.5)
         self.show_transform_and_fadeout_expl(generator, start=2, end=4, circumscribe=True, fade_out=False)
         self.show_transform_and_fadeout_expl(generator, start=4, circumscribe=True, fade_out=True)
 
@@ -162,10 +171,13 @@ class S7_GeneratorDef(MyScene):  # 7th scene
         generator_def = MathTex(r"\langle a \rangle = \{ a^k:\; k\in\mathbb{Z} \}")
         generator_def_2 = MathTex(r"G = \langle a \rangle \quad\quad \text{generator}").next_to(generator_def, DOWN)
 
-        self.play(Write(generator_def))
         self.play(Write(generator_def_2))
         a = self.get_and_add_arrow(DOWN+RIGHT, DOWN+LEFT, radius=-1.3, color=COLOR_1, tip_length=0.2, tip_width=0.2)
+        self.wait(3)
+        self.play(Write(generator_def))
+        self.wait(4)
         self.play(FadeOut(a))
+        self.wait(2)
 
         vgroup = VGroup(generator_def, generator_def_2)
         return vgroup
@@ -176,7 +188,10 @@ class S7_GeneratorDef(MyScene):  # 7th scene
         def_1 = MathTex(r"a^0 = e")
 
         def_vgroup = VGroup(def_0, def_1).arrange(direction=DOWN, aligned_edge=LEFT).to_edge(UL)
-        self.play(Write(def_vgroup))
+        self.play(Write(def_vgroup[0]), run_time=1.5)
+        self.wait(9)
+        self.play(Write(def_vgroup[1]))
+        self.wait(3)
 
         return def_vgroup
     

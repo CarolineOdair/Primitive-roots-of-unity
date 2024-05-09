@@ -10,7 +10,7 @@ class S5_ComplexRoots(MyScene):  # 5th scene
         formula_root, formula_power, formula_roots = vgroup
 
         plane = self.add_plane(azimuth_step=8, shiftt=3*RIGHT+0.5*DOWN, r_values=[1,2])
-        self.add(plane)
+        # self.add(plane)
         
 
         ######    examples    ######
@@ -20,9 +20,12 @@ class S5_ComplexRoots(MyScene):  # 5th scene
         ######    unity case    ######
         problem_text = Tex(r"Find all primitive\\", r"$n^{th}$ roots of unity", r".").shift(3*RIGHT)
         self.play(Write(problem_text))
-        self.play(FadeToColor(problem_text[-2], color=COLOR_1))
+        self.wait(4)
+        self.play(FadeToColor(problem_text[-2], color=COLOR_1), run_time=5)
+        self.wait(5)
 
         formula_number_2, vgroup_2 = self.animate_text_about_unity(formula_number, *vgroup)
+        self.wait(1.5)
 
 
         ######    clear screen    ######
@@ -35,9 +38,6 @@ class S5_ComplexRoots(MyScene):  # 5th scene
 
 
         self.clear_screen(planes_roots_of_1, COLOR_1)
-
-
-        self.wait(5)
 
 
 
@@ -76,6 +76,7 @@ class S5_ComplexRoots(MyScene):  # 5th scene
 
         vgr = VGroup(*elements_for_planes_group)
         self.play(Create(vgr), run_time=8)
+        self.wait()
 
         # Uncreate plane titles here because `ReplacementTransform`` in
         # self.clear_screen gives error if MathTex, Tex, Text mobject is in the group
@@ -137,6 +138,7 @@ class S5_ComplexRoots(MyScene):  # 5th scene
         self.show_transform_and_fadeout_expl(formula_number_ch, start=2, end=4, fade_out=False)
         self.show_transform_and_fadeout_expl(formula_roots_list_ch, start=1, end=4, fade_out=False)
 
+        self.wait(2)
         # phi = 0 change
         self.show_transform_and_fadeout_expl(formula_number_ch, start=4, fade_out=False)
         self.show_transform_and_fadeout_expl(formula_roots_list_ch, start=4, fade_out=False)
@@ -167,23 +169,23 @@ class S5_ComplexRoots(MyScene):  # 5th scene
 
         for (z, n, text) in examples:
 
-            roots_formula = Tex(text, font_size=FS, tex_environment="center").next_to(plane.get_top(), 0.5*UP)
-            self.add(roots_formula)
+            # roots_formula = Tex(text, font_size=FS, tex_environment="center").next_to(plane.get_top(), 0.5*UP)
+            # self.add(roots_formula)
 
-            z_point, z_n_group = self.get_point_and_n_roots(z, n, plane)
-            self.add_and_remove_point_and_n_roots(z_point, z_n_group)
+            z_point, z_n_group = self.get_point_and_n_roots(z, n, plane, dot_radius=0.1, z_dot_radius=0.12)
+            # self.add_and_remove_point_and_n_roots(z_point, z_n_group)
 
-            self.remove(roots_formula)
+            # self.remove(roots_formula)
 
             gr = VGroup(plane.copy().set_color(GREY_B), z_point, z_n_group).scale(0.5).shift(3*LEFT+0.5*UP)
             elements_for_planes_group.append(gr)
 
 
-        self.play(Uncreate(plane), run_time=0.5)
+        # self.play(Uncreate(plane), run_time=0.5)
 
         planes_group = VGroup(*elements_for_planes_group).arrange_in_grid(rows=3, cols=3, buff=0.2).shift(3*RIGHT+0.5*DOWN)
-        self.play(AnimationGroup(*[FadeIn(p) for p in planes_group], lag_ratio=0.25))
-        self.wait(2)
+        self.play(AnimationGroup(*[FadeIn(p) for p in planes_group], run_time=8, lag_ratio=0.5))
+        self.wait(8)
         self.play(FadeOut(planes_group))
 
 
@@ -193,8 +195,14 @@ class S5_ComplexRoots(MyScene):  # 5th scene
         FS = font_size
 
         formula_number = MathTex(r"z", r"=", r"r", r"e^{\imath", r"\varphi", r"}", font_size=FS+10).to_edge(UP)
+        self.play(Write(formula_number), run_time=3)
+        self.wait(3)
         formula_root = MathTex(r"\sqrt[n]{z}", r"=", r"\varepsilon", font_size=FS+10).shift(UP)
+        self.play(Write(formula_root), run_time=3)
+        self.wait(5)
         formula_power = MathTex(r"\varepsilon^n", r"=", r"z", font_size=FS+10)
+        self.play(Write(formula_power), run_time=3)
+        self.wait(4)
         
         formula_roots_list = [
             r"\varepsilon_k @ = @ \sqrt[n]{r} @ \exp\left(\imath\frac{\varphi+2k\pi}{n}\right) @ ,\quad k\in @ \mathbb{Z}".split("@"),
@@ -222,15 +230,16 @@ class S5_ComplexRoots(MyScene):  # 5th scene
         ]
         formula_roots_expl_list = [MathTex(*text, font_size=FS).shift(2.3*DOWN) for text in formula_roots_expl_list]
 
-        start_formulas = [formula_number, formula_root, formula_power, formula_roots_list[0]]
-        for f in start_formulas:
-            self.play(Write(f))
+        self.play(Write(formula_roots_list[0]), run_time=2)
+        self.wait(18)
 
-        self.show_transform_and_fadeout_expl(formula_roots_power_expl_list, circumscribe=True, transform_goal=formula_power)
+        self.show_transform_and_fadeout_expl(formula_roots_power_expl_list, circumscribe=True, transform_goal=formula_power, time_between_transform=1.5)
         self.show_transform_and_fadeout_expl(formula_roots_expl_list, circumscribe=True, transform_goal=formula_roots_list[0])
+        self.wait(1.5)
         self.show_transform_and_fadeout_expl(formula_roots_list, start=1, fade_out=False, circumscribe=True)
 
         vgroup = VGroup(formula_root, formula_power, formula_roots_list[3])
+        self.wait(2)
         self.play(vgroup.animate.shift(3.5*LEFT))
 
         return formula_number, vgroup

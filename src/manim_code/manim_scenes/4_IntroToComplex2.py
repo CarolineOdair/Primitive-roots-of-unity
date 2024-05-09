@@ -26,7 +26,7 @@ class S4_MultiplyingComplex(MyScene):  # 4th scene
 
         self.add(main_group)
 
-        self.wait(1)
+        self.wait(10)
 
 
         ######    add second point    ######
@@ -57,11 +57,11 @@ class S4_MultiplyingComplex(MyScene):  # 4th scene
         temp_point = [sub for sub in temp_group.submobjects if type(sub)==Dot][0]
         temp_label = MathTex("|z||w|e^{\imath(\\varphi+\\theta)}", font_size=35).set_z_index(3).next_to(temp_point, DOWN, 0.1)
         self.play(Write(temp_label))
-        self.wait(1)
+        self.wait(0.5)
         self.play(FadeOut(temp_group, temp_label, W_point_group
                            ), run_time=4)
 
-        self.wait(2)
+        self.wait(0.5)
 
         # equation z^2
         equation_2 = MathTex(
@@ -83,12 +83,12 @@ class S4_MultiplyingComplex(MyScene):  # 4th scene
 
         last_dot = Dot(plane.get_origin(), color=COLOR_2, radius=0.05)
         self.play(ReplacementTransform(main_group, last_dot))
-        self.play(Wiggle(last_dot))
+        self.play(Wiggle(last_dot), run_time=0.5)
         self.play(last_dot.animate.shift(3.5*RIGHT))
-        self.play(Wiggle(last_dot))
+        self.play(Wiggle(last_dot), run_time=0.5)
         self.play(Uncreate(last_dot))
 
-        self.wait(2)
+        self.wait(0.5)
 
 
 
@@ -125,7 +125,6 @@ class S4_MultiplyingComplex(MyScene):  # 4th scene
         mul_framebox_3 = SurroundingRectangle(equation[9], buff=.1, color=COLOR_3)
         mul_framebox_group = VGroup(mul_framebox_1, mul_framebox_2)
         self.play(Create(mul_framebox_group))
-        self.wait()
 
         self.play(Transform(mul_framebox_group, mul_framebox_3), tracker_radius.animate.set_value(Z[0]+delta_radius), run_time=3)
         self.play(FadeOut(mul_framebox_group))
@@ -136,7 +135,6 @@ class S4_MultiplyingComplex(MyScene):  # 4th scene
         add_framebox_3 = SurroundingRectangle(equation[11], buff=.1, color=COLOR_3)
         add_framebox_group = VGroup(add_framebox_1, add_framebox_2)
         self.play(Create(add_framebox_group))
-        self.wait()
 
         self.play(Transform(add_framebox_group, add_framebox_3), tracker_angle.animate.set_value(Z[1]+delta_angle), run_time=3)
         self.play(FadeOut(add_framebox_group))

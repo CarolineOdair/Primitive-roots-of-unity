@@ -12,16 +12,16 @@ class S6_IntroGroup(MovingCameraScene):  # 6th scene
         ######    axioms    ######
         group_notation = self.add_group_notation()
         axioms_vgroup = self.add_group_axioms()
+        self.wait(3)
 
         ######    integers example    ######
         self.manage_integers_example(axioms_vgroup)
 
-        ######    Z_n example    ######
+        # ######    Z_n example    ######
         mobj_on_screen = self.manage_zn_group_def()
         self.wait(1)
         self.clear_screen(mobj_on_screen, COLOR_1)
-
-        self.wait(5)
+        self.wait()
 
     def clear_screen(self, mobjects_on_screen, color=COLOR_1) -> None:
 
@@ -44,8 +44,11 @@ class S6_IntroGroup(MovingCameraScene):  # 6th scene
 
         self.play(FadeIn(temp_group_ex))
         self.play(self.camera.frame.animate.shift(self.camera_shift))
+        self.wait(6)
         self.play(FadeIn(zn_set))
+        self.wait(3)
         self.play(FadeIn(zn_plus_operation))
+        self.wait(6)
 
         for prev, cur in zip(zn_list, z8_list):
             self.play(TransformMatchingTex(prev, cur))
@@ -57,13 +60,15 @@ class S6_IntroGroup(MovingCameraScene):  # 6th scene
         # 2 + 3 = 5 
         zn_plus_operation_2_3 =  MathTex(r"2", r"+_", r"8", r"3", r"=", r"(2+3)", r"\text{ mod }", r"8", r"= 5", r"\text{ mod }", r"8", r"=", r"5").next_to(zn_set, DOWN)
         self.play(TransformMatchingTex(zn_plus_operation_8, zn_plus_operation_2_3))
+        self.wait(2)
         self.add_zn_boxes_animation(boxes, 2, 3, color=COLOR_2)
 
         # 5 + 6 = 3
         zn_plus_operation_5_6 =  MathTex(r"5", r"+_", r"8", r"6 = (5+6)", r"\text{ mod }", r"8", r"= 11", r"\text{ mod }", r"8", r"=", r"3").next_to(zn_set, DOWN)
         self.play(TransformMatchingTex(zn_plus_operation_2_3, zn_plus_operation_5_6))
+        self.wait(2)
         self.add_zn_boxes_animation(boxes, 5, 6, color=COLOR_2)
-
+        self.wait(2)
 
         mobjects_on_screen = VGroup(temp_group_ex_8, zn_set_8, zn_plus_operation_5_6, boxes)
 
@@ -144,8 +149,8 @@ class S6_IntroGroup(MovingCameraScene):  # 6th scene
 
         temp_group_ex = MathTex(r"(\mathbb{Z}, +)").shift(4*RIGHT+0.5*DOWN)
         underline = Underline(temp_group_ex, color=c)
-        self.play(FadeIn(temp_group_ex), Create(underline))
-
+        self.play(FadeIn(temp_group_ex), Create(underline), run_time=3)
+        self.wait()
 
         ######    axiom 0    ######
         ax_0 = axioms_vgroup.submobjects[0]
@@ -155,7 +160,8 @@ class S6_IntroGroup(MovingCameraScene):  # 6th scene
         self.play(
             FadeToColor(ax_0, color=COLOR_1),
             Write(ax_0_quantifier), 
-            Write(ax_0_text)
+            Write(ax_0_text),
+            run_time=2
             )
         self.play(FadeToColor(ax_0, color=WHITE))
 
@@ -168,9 +174,10 @@ class S6_IntroGroup(MovingCameraScene):  # 6th scene
         self.play(
             FadeToColor(ax_1, color=COLOR_1),
             TransformMatchingTex(ax_0_quantifier, ax_1_quantifier), 
-            TransformMatchingTex(ax_0_text, ax_1_text)
+            TransformMatchingTex(ax_0_text, ax_1_text), 
+            run_time=3
             )
-        self.wait(1)
+        self.wait(6)
         self.play(FadeToColor(ax_1, color=WHITE))
 
         ######    axiom 2    ######
@@ -181,9 +188,10 @@ class S6_IntroGroup(MovingCameraScene):  # 6th scene
         self.play(
             FadeToColor(ax_2, color=COLOR_1), 
             TransformMatchingTex(ax_1_quantifier, ax_2_quantifier), 
-            TransformMatchingTex(ax_1_text, ax_2_text)
+            TransformMatchingTex(ax_1_text, ax_2_text),
+            run_time=2
             )
-        self.wait(1)
+        self.wait()
         self.play(FadeToColor(ax_2, color=WHITE))
 
         ######    axiom 3    ######
@@ -194,9 +202,10 @@ class S6_IntroGroup(MovingCameraScene):  # 6th scene
         self.play(
             FadeToColor(ax_3, color=COLOR_1), 
             TransformMatchingTex(ax_2_quantifier, ax_3_quantifier), 
-            TransformMatchingTex(ax_2_text, ax_3_text)
+            TransformMatchingTex(ax_2_text, ax_3_text),
+            run_time=2
             )
-        self.wait(1)
+        self.wait()
         self.play(FadeToColor(ax_3, color=WHITE))
 
 
@@ -215,8 +224,11 @@ class S6_IntroGroup(MovingCameraScene):  # 6th scene
         ax_3 = MathTex(r"\forall_{a\in G}\;\; \exists_{a^{-1}\in G}\quad a*a^{-1}=a^{-1}*a=e")  # Inverse element
 
         axioms_vgroup = VGroup(ax_0, ax_1, ax_2, ax_3).arrange(direction=DOWN, aligned_edge=LEFT).to_edge(UL)
-        self.play(AnimationGroup(*[Write(p) for p in axioms_vgroup], lag_ratio=4))
-        # self.play(Write(axioms_vgroup))
+        wait_list = [12, 23, 16.5, 26.5]
+        self.wait()
+        for i, ax in enumerate(axioms_vgroup):
+            self.play(Write(ax), run_time=2)
+            self.wait(wait_list[i])
 
         return axioms_vgroup
 
@@ -229,9 +241,12 @@ class S6_IntroGroup(MovingCameraScene):  # 6th scene
         group_notation = MathTex(r"(G, *)").shift(2.5*UP+4*RIGHT)  # group notation
         group_text = Tex(r"group").shift(1.5*UP+4*RIGHT)
 
-        self.play(Write(group_notation))
-        self.play(Write(group_text))
+        self.play(Write(group_text), run_time=1.5)
+        self.wait(2)
+        self.play(Write(group_notation), run_time=1.5)
+        self.wait()
         a = self.get_and_add_arrow(1.6*UP+4.8*RIGHT, 2.5*UP+4.8*RIGHT, radius=0.7, color=COLOR_1, tip_length=0.2, tip_width=0.2)
+        self.wait(4)
 
         vgroup = VGroup(group_notation, group_text, a)
         return vgroup
