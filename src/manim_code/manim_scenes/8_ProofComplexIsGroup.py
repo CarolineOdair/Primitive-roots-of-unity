@@ -24,12 +24,12 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
 
 
         ######    finish    ######
-        self.wait()
-        self.play(group_notation_group.animate.shift(3*DOWN))
-        self.play(Circumscribe(group_notation_group, color=COLOR_2, buff=MED_SMALL_BUFF))
-        self.play(FadeOut(group_notation_group, plane_obj_group))
-
         self.wait(2)
+        self.play(group_notation_group.animate.shift(3*DOWN), run_time=2)
+        self.wait(3)
+        self.play(Circumscribe(group_notation_group, color=COLOR_2, buff=MED_SMALL_BUFF), run_time=2)
+        self.play(FadeOut(group_notation_group, plane_obj_group), run_time=6)
+
 
 
 
@@ -43,7 +43,7 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
         plane_title = MathTex(r"\text{E}_n", font_size=self.FS).next_to(plane, 0.5*UP)
         plane_title_update = MathTex(r"\text{E}_n", r"= \{ e^{\imath 2k\pi/n}: k\in\mathbb{Z}_n \}", font_size=self.FS).next_to(plane, 0.5*UP)
 
-        self.play(Create(VGroup(plane, z_n_group, plane_title)), run_time=4)
+        self.play(Create(VGroup(plane, z_n_group, plane_title)), run_time=6)
         self.wait()
         self.play(TransformMatchingTex(plane_title, plane_title_update))
 
@@ -76,7 +76,8 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
         example = MathTex(r"(E_n, \cdot)", color=example_color, font_size=self.FS+10)
         vgr = VGroup(theory, example).arrange_in_grid(rows=1, cols=2, buff=0.5).shift(hor_position).to_edge(UP)
 
-        self.play(AnimationGroup(*[Write(p) for p in vgr], lag_ratio=1))
+        self.play(AnimationGroup(*[Write(p) for p in vgr], lag_ratio=1), run_time=2)
+        self.wait(1.5)
         
         return vgr
     
@@ -111,7 +112,7 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
 
         self.play(AnimationGroup(*[Create(VGroup(z_point, z_label)), 
                                    Create(VGroup(w_point, w_label)), 
-                                   Create(VGroup(z_w_point, z_w_label))], lag_ratio=1.25))
+                                   Create(VGroup(z_w_point, z_w_label))], lag_ratio=1.25), run_time=2)
 
 
         return VGroup(z_point, w_point, z_w_point, z_label, w_label, z_w_label)
@@ -155,9 +156,9 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
         vgr = VGroup(theory, example).shift(hor_position)
 
         self.play(AnimationGroup(*[Write(theory), *[Write(example[i]) for i in range(2)]], lag_ratio=1.5))
-        self.wait()
+        self.wait(3)
         self.play(Circumscribe(example, color=theory_color, fade_out=True, run_time=2, buff=0.3))
-        self.wait()
+        self.wait(2)
         self.play(FadeOut(vgr))
 
 
@@ -174,7 +175,9 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
                           color=example_color, font_size=self.FS+10).shift(DOWN)
         vgr = VGroup(theory, example).shift(hor_position)
 
-        self.play(AnimationGroup(*[Write(theory), *[Write(example[i]) for i in range(6)]], lag_ratio=1.5))
+        self.play(AnimationGroup(*[Write(theory), *[Write(example[i]) for i in range(5)]], lag_ratio=2))
+        self.wait(11)
+        self.play(Write(example[-1]))
 
         temp_plane_vgr = self.animation_to_3_axiom(plane_vgr[0])
 

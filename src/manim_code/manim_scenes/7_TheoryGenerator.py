@@ -18,10 +18,10 @@ class S7_GeneratorDef(MyScene):  # 7th scene
         self.play(FadeOut(power_def, generator_def))
         obj_on_screen = self.z_8_example()
 
-
+        self.wait(5)
         self.clear_screen(obj_to_clear=obj_on_screen, color=COLOR_2)
 
-        self.wait(5)
+        self.wait()
 
 
 
@@ -39,31 +39,37 @@ class S7_GeneratorDef(MyScene):  # 7th scene
 
         # powers of 2
         a = 2
-        # boxes = self.manage_power_z_n(8, 2, 10, boxes)
-        self.add_zn_boxes_animation(boxes, a, a*5, step=a, color=COLOR_2)
+        # boxes = self.manage_power_z_n(8, 2, 8, boxes)
+        self.wait()
+        self.add_zn_boxes_animation(boxes, a, a*4, step=a, color=COLOR_2)
         generator_text = MathTex(r"\langle 2 \rangle = \{ 0, 2, 4, 6 \} \neq \mathbb{Z}_8").next_to(a_text, DOWN)
+        self.wait()
         self.play(Write(generator_text))
 
+        self.wait(2)
         self.play(boxes.animate.set_stroke_color(WHITE))
         self.play(FadeOut(generator_text))
 
         # powers of 1
         a=1
         self.play(Transform(a_text, MathTex(r"a=", r"1").next_to(temp_group_ex_8, DOWN)))
+        self.wait(1.5)
         # boxes = self.manage_power_z_n(8, 1, 7, boxes)
-        self.add_zn_boxes_animation(boxes, a, a*8, step=a, color=COLOR_2)
+        self.add_zn_boxes_animation(boxes, a, a*8, step=a, color=COLOR_2, run_time_weight=0.6)
         self.play(boxes[0].animate.set_stroke_color(COLOR_2))
         generator_text = MathTex(r"\langle 1 \rangle = \{ 0,1,2,3,4,5,6,7 \} = \mathbb{Z}_8").next_to(a_text, DOWN)
         self.play(Write(generator_text))
 
         self.play(boxes.animate.set_stroke_color(WHITE))
         self.play(FadeOut(generator_text))
+        self.wait()
 
         # powers of 3
         a = 3
         a_text_2 = MathTex(r"a=", r"3").next_to(temp_group_ex_8, DOWN)
         self.play(ReplacementTransform(a_text, a_text_2))
-        self.add_zn_boxes_animation(boxes, a, a*7, step=a, color=COLOR_2)
+        self.wait(2)
+        self.add_zn_boxes_animation(boxes, a, a*7, step=a, color=COLOR_2, run_time_weight=0.6)
         self.play(boxes[0].animate.set_stroke_color(COLOR_2))
         generator_text = MathTex(r"\langle 3 \rangle = \{ 0,1,2,3,4,5,6,7 \} = \mathbb{Z}_8").next_to(a_text, DOWN)
         self.play(Write(generator_text))
@@ -72,13 +78,13 @@ class S7_GeneratorDef(MyScene):  # 7th scene
         return mobjects_on_screen
 
 
-    def animation_before_the_arrow(self, boxes, start_box_index):
+    def animation_before_the_arrow(self, boxes, start_box_index, run_time_weight=1):
         if boxes[start_box_index].get_stroke_color() != COLOR_2:
-            self.play(boxes[start_box_index].animate.set_stroke_color(COLOR_2))
+            self.play(boxes[start_box_index].animate.set_stroke_color(COLOR_2), run_time=run_time_weight)
 
-    def animation_after_the_arrow(self, boxes, end_box_index):
+    def animation_after_the_arrow(self, boxes, end_box_index, run_time_weight=1):
         if boxes[end_box_index].get_stroke_color() != COLOR_2:
-            self.play(boxes[end_box_index].animate.set_stroke_color(COLOR_2))
+            self.play(boxes[end_box_index].animate.set_stroke_color(COLOR_2), run_time=run_time_weight)
 
 
     def manage_integers_example(self):

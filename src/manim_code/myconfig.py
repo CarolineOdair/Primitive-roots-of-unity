@@ -56,7 +56,7 @@ class MyScene(Scene):
 
 
     def add_zn_boxes_animation(self, boxes:VGroup, start:int, add:int, arc_radius:float=None,
-                               color:ManimColor=WHITE, step:int=1, stroke_color:ManimColor=COLOR_2):
+                               color:ManimColor=WHITE, step:int=1, stroke_color:ManimColor=COLOR_2, run_time_weight=1):
 
         n = len(boxes)
         if step <= 0:
@@ -79,17 +79,17 @@ class MyScene(Scene):
         
         for plus in range(int(add/step)):
             if (start_index % n) + step < n:
-                self.animation_before_the_arrow(boxes=boxes, start_box_index=start_index%n)
+                self.animation_before_the_arrow(boxes=boxes, start_box_index=start_index%n, run_time_weight=run_time_weight)
                 start_top = boxes.submobjects[start_index % n].get_top() + [0, 0.1, 0]
                 next_top = start_top + length_between_boxes
-                arrow = self.get_and_add_arrow(start_top, next_top, radius=-arc_radius, play=False, color=color)
+                arrow = self.get_and_add_arrow(start_top, next_top, radius=-arc_radius, play=False, color=color, run_time_weight=run_time_weight)
 
                 if len(last_arrows) != 0:
-                    self.play(Create(arrow), FadeOut(*last_arrows))
+                    self.play(Create(arrow), FadeOut(*last_arrows), run_time=run_time_weight)
                 else:
-                    self.play(Create(arrow))
+                    self.play(Create(arrow), run_time=run_time_weight)
 
-                self.play(boxes[start_index%n+step].animate.set_stroke_color(stroke_color))
+                self.play(boxes[start_index%n+step].animate.set_stroke_color(stroke_color), run_time=run_time_weight)
                 start_index += step
                 last_arrows = [arrow]
 
@@ -97,32 +97,32 @@ class MyScene(Scene):
             elif (start_index % n) + step >= n:
                 start_1_top = boxes.submobjects[start_index % n].get_top() + [0, 0.1, 0]
                 next_1_top = start_1_top + length_between_boxes
-                arrow_1 = self.get_and_add_arrow(start_1_top, next_1_top, radius=-arc_radius, play=False, color=color)
+                arrow_1 = self.get_and_add_arrow(start_1_top, next_1_top, radius=-arc_radius, play=False, color=color, run_time_weight=run_time_weight)
 
                 next_2_top = boxes.submobjects[(start_index + step) % n].get_top() + [0, 0.1, 0]
                 start_2_top = next_2_top - length_between_boxes
-                arrow_2 =  self.get_and_add_arrow(start_2_top, next_2_top, radius=-arc_radius, play=False, color=color)
+                arrow_2 =  self.get_and_add_arrow(start_2_top, next_2_top, radius=-arc_radius, play=False, color=color, run_time_weight=run_time_weight)
 
                 if len(last_arrows) != 0:
-                    self.play(Create(arrow_1), Create(arrow_2), FadeOut(*last_arrows))
+                    self.play(Create(arrow_1), Create(arrow_2), FadeOut(*last_arrows), run_time=run_time_weight)
                 else:
-                    self.play(Create(arrow_1), Create(arrow_2))
+                    self.play(Create(arrow_1), Create(arrow_2), run_time=run_time_weight)
 
-                self.play(boxes[(start_index+step)%n].animate.set_stroke_color(stroke_color))
+                self.play(boxes[(start_index+step)%n].animate.set_stroke_color(stroke_color), run_time=run_time_weight)
 
                 start_index += step
                 last_arrows = [arrow_1, arrow_2]
 
-        self.play(FadeOut(*last_arrows))
+        self.play(FadeOut(*last_arrows), run_time=run_time_weight)
 
 
-    def animation_before_the_arrow(self, boxes, start_box_index):
+    def animation_before_the_arrow(self, boxes, start_box_index, **kwargs):
         pass
 
-    def animation_after_the_arrow(self, boxes, end_box_index):
+    def animation_after_the_arrow(self, boxes, end_box_index, **kwargs):
         pass
 
-    def get_and_add_arrow(self, start, end, radius:float=2, color=WHITE, tip_length=0.2, tip_width=0.2, play:bool=True):
+    def get_and_add_arrow(self, start, end, radius:float=2, color=WHITE, tip_length=0.2, tip_width=0.2, play:bool=True, run_time_weight=1):
         # Play creating arc between given points
         # Return arc
 
@@ -130,7 +130,7 @@ class MyScene(Scene):
         a.add_tip(tip_shape=StealthTip, tip_length=tip_length, tip_width=tip_width)
 
         if play:
-            self.play(Create(a))
+            self.play(Create(a), run_time=run_time_weight)
 
         return a
 
