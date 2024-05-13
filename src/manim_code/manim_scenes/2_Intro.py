@@ -14,7 +14,7 @@ class S2_IntroduceProblem(MyScene):  # 2nd scene
             "Complex numbers",
             "Complex roots",
             "Some abstract algebra",
-            "Back to nice things"
+            "Algebra + complex numbers"
             ]
 
         plan = [Text(text).set_opacity(0.5) for text in plan]

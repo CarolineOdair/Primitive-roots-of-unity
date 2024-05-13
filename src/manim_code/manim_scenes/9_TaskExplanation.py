@@ -15,6 +15,7 @@ class S9_TaskExpl(MyScene):  # 9th scene
 
         self.wait(2)
         self.clear_screen(VGroup(obj, plane_left, plane_right), color=COLOR_2)
+        self.wait(1.5)
 
 
 

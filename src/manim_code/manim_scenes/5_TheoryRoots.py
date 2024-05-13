@@ -25,7 +25,7 @@ class S5_ComplexRoots(MyScene):  # 5th scene
         self.wait(5)
 
         formula_number_2, vgroup_2 = self.animate_text_about_unity(formula_number, *vgroup)
-        self.wait(1.5)
+        self.wait(3)
 
 
         ######    clear screen    ######
@@ -215,7 +215,7 @@ class S5_ComplexRoots(MyScene):  # 5th scene
             r"\varepsilon_k^n @ = @ \left( @ \sqrt[n]{r} @   \exp\left( \imath @ \frac{\varphi+2k\pi}{n} @ \right) @ \right)^n @ ,\quad k\in\mathbb{Z}".split("@"),
             r"\varepsilon_k^n @ = @          \sqrt[n]{r}^n @ \exp\left( \imath @ \frac{\varphi+2k\pi}{n} @        \right)@^n @   ,\quad k\in\mathbb{Z}".split("@"),
             r"\varepsilon_k^n @ = @ r @                      \exp\left( \imath @ \frac{\varphi+2k\pi}{n}\cdot n @ \right) @      ,\quad k\in\mathbb{Z}".split("@"),
-            r"\varepsilon_k^n @ = @ r @                      \exp\left( \imath @       \varphi+2k\pi @            \right) @      ,\quad k\in\mathbb{Z}".split("@"),
+            r"\varepsilon_k^n @ = @ r @                      \exp\left( \imath @   ( @ \varphi+2k\pi @ ) @        \right) @      ,\quad k\in\mathbb{Z}".split("@"),
             r"\varepsilon_k^n @ = @ r @                      \exp\left( \imath @       \varphi @                  \right) @      ,\quad k\in\mathbb{Z}".split("@"),
             r"\varepsilon_k^n @ = @ z @ ,\quad k\in\mathbb{Z}".split("@")
         ]

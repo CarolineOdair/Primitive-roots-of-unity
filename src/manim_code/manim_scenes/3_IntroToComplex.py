@@ -97,7 +97,9 @@ class S3_ComplexNumbers(Scene):  # 3rd scene
         self.play(Transform(label_2_cart, label_2_exp), run_time=5)
         self.wait()
 
-        label_3_exp = MathTex("|z| e^{\imath \\varphi}").next_to(point_2, UR, 0.1)
+        # Z_point_label = MathTex("|z|e^{\imath\\varphi}", font_size=35).set_z_index(3).next_to(point_2, UP, 0.1)
+
+        label_3_exp = MathTex("|z| e^{\imath \\varphi}", font_size=35).next_to(point_2, UP, 0.1)
         self.play(Transform(label_2_cart, label_3_exp), run_time=2)
 
         z_label_edited = MathTex("z = a+\imath b = |z| e^{\imath \\varphi}", color=COLOR_1).to_edge(UP)

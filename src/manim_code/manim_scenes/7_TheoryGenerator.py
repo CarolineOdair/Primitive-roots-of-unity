@@ -12,6 +12,7 @@ class S7_GeneratorDef(MyScene):  # 7th scene
         self.play(FadeOut(group_notation), generator_def.animate.move_to(group_notation))
 
         #####    integers example    ######
+        self.wait(1.5)
         self.manage_integers_example()
 
         #####    z_8 example    ######

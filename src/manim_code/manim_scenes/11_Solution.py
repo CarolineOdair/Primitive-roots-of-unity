@@ -203,15 +203,21 @@ class S11_ProblemSolver(MyScene):  # 11th scene
                                  r"ak &= nl\\", 
                                  r"n&|ak\\", 
                                  r"n&|a").shift(DOWN)
-        self.set_color_method(rel_prime_expl, [(1,0), (2,2), (3,-1)], self.k_color)
+        self.set_color_method(rel_prime_expl, [(1,0), (2,1), (3,-1)], self.k_color)
         self.set_color_method(rel_prime_expl, [(0,-1), (2,4), (3,0), (4,0)], self.n_color)
         self.play(AnimationGroup(*[Write(rel_prime_expl[i]) for i in range(4)], lag_ratio=1.8))
         self.wait(7)
         self.play(Write(rel_prime_expl[4]))
         self.wait(5)
         self.play(Circumscribe(rel_prime_expl[0], color=RED_D))
-        self.wait(4)
-        self.play(FadeOut(rel_prime_expl))
+        
+        myTemplate = TexTemplate()
+        myTemplate.add_to_preamble(r"\usepackage{stmaryrd}")
+        lightning = Tex(r"$\lightning$", tex_template=myTemplate, color=RED_D).shift(2.5*DOWN+1.5*RIGHT)
+        self.play(Create(lightning))
+
+        self.wait(3)
+        self.play(FadeOut(rel_prime_expl, lightning))
 
         self.play(TransformMatchingTex(rel_prime_contr, rel_prime))
         self.wait()

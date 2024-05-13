@@ -30,6 +30,8 @@ class S8_ProofComplexIsGroup(MyScene):  # 8th scene
         self.play(Circumscribe(group_notation_group, color=COLOR_2, buff=MED_SMALL_BUFF), run_time=2)
         self.play(FadeOut(group_notation_group, plane_obj_group), run_time=6)
 
+        self.wait(1.5)
+
 
 
 
