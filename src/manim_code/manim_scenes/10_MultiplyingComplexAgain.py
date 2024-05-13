@@ -13,7 +13,6 @@ class S10_ShowComplexAndZnSimilarity(MyScene):  # 10th scene
 
         self.play(*[FadeOut(mob) for mob in self.mobjects])
 
-        self.wait(5)
 
 
     def multiply_complex_part(self) -> MathTex:
@@ -28,16 +27,21 @@ class S10_ShowComplexAndZnSimilarity(MyScene):  # 10th scene
         iso_symbol = MathTex(r"\simeq")
 
         self.play(Write(en_group_text))
-        self.play(AnimationGroup(*[Write(roots), *[Write(formula[i]) for i in range(5)]], lag_ratio=1.5))
+        self.wait(2)
+        self.play(AnimationGroup(*[Write(roots), *[Write(formula[i]) for i in range(3)]], lag_ratio=2))
+        self.wait(14)
+        self.play(AnimationGroup(*[Write(formula[i]) for i in range(3,5)], lag_ratio=2))
         self.wait()
         self.play(FadeOut(formula[1:-1]))
         self.play(Unwrite(VGroup(formula[0], formula[-1])))
         self.play(Write(end_formula))
+        self.wait(3)
         self.play(en_group_text.animate.next_to(roots, 2*UP).shift(1.2*LEFT))
         self.play(Write(zn_group_text.next_to(roots, 2*UP).shift(1.5*RIGHT)))
         
         coordinates = (en_group_text.get_right() + zn_group_text.get_left())/2
         self.play(Write(iso_symbol.move_to(coordinates)))
+        self.wait(2)
 
         self.play(FadeOut(en_group_text, iso_symbol, zn_group_text, roots))
         self.play(end_formula.animate.to_edge(UP))
@@ -95,9 +99,12 @@ class S10_ShowComplexAndZnSimilarity(MyScene):  # 10th scene
         zn_expression = MathTex(r"2^3 = 2+_6 2+_6 2 ").shift(2*UP+3*RIGHT)
         self.play(Write(en_expression), Write(zn_expression))
 
-        self.animate_about_primitives(plane_group[0], 6, 2, num_of_steps=2, if_fade=False)
-        self.add_zn_boxes_animation(boxes, 2, 4, color=COLOR_1, step=2, stroke_color=COLOR_1)
+        self.wait(6)
 
+        self.animate_about_primitives(plane_group[0], 6, 2, num_of_steps=2, if_fade=False)
+        self.wait(2)
+        self.add_zn_boxes_animation(boxes, 2, 4, color=COLOR_1, step=2, stroke_color=COLOR_1, run_time_weight=1.2)
+        self.wait()
         self.add_last_expressions_and_frameboxes(en_expression, zn_expression)
 
 
@@ -120,7 +127,7 @@ class S10_ShowComplexAndZnSimilarity(MyScene):  # 10th scene
             self.play(Create(fr_1), Create(fr_2))
 
 
-    def animation_before_the_arrow(self, boxes, start_box_index):
+    def animation_before_the_arrow(self, boxes, start_box_index, run_time_weight):
         if start_box_index == 2:
             self.play(boxes[start_box_index].animate.set_stroke_color(COLOR_1))
 
@@ -132,12 +139,11 @@ class S10_ShowComplexAndZnSimilarity(MyScene):  # 10th scene
         z_point, z_n_group = self.get_point_and_n_roots((1,0), n, plane, roots_color=COLOR_2, dot_radius=0.07)
 
         gr = VGroup(plane, z_n_group)
-        self.play(Create(gr), run_time=4)
-        self.wait()
+        self.play(Create(gr))
 
         for index, pos in zip(range(len(z_n_group)), [UR, UR, UL, UL, DL, DR]):
             label = MathTex(r"\varepsilon_", rf"{index}").next_to(z_n_group[index], 0.5*pos)
-            self.play(Write(label))
+            self.play(Write(label), run_time=1/8)
 
         return gr
     

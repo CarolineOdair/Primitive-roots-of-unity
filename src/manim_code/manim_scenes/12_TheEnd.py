@@ -14,16 +14,21 @@ class S12_Finish(MyScene):  # 12th scene
         solution[0].set_color(COLOR_1)
         solution[2].set_color(COLOR_2)
 
-        self.play(Write(solution))
+        self.play(Write(solution), run_tim=4)
 
         signature = ["Author:", "Karolina Fisiak"]
         signature = [Tex(el).set_opacity(0.5) for el in signature]
         signature_gr = VGroup(*signature).arrange(DOWN).scale(0.4).to_edge(DR)
+        self.wait(2)
         self.play(Write(signature_gr))
 
-        self.wait(3)
+        self.wait(2)
         vgr = VGroup(task, line_gradient, solution, signature_gr)
-        self.clear_screen(vgr, COLOR_1)
+
+        final_dots = VGroup(Dot(color=COLOR_1), Dot(color=COLOR_2), Dot(color=COLOR_3)).arrange(RIGHT, 1)
+        self.play(ReplacementTransform(vgr, final_dots))
+        self.wait(0.5)
+        self.play(Uncreate(final_dots))
         self.wait(2)
 
         
