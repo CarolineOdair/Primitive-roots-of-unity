@@ -74,7 +74,7 @@ class S11_ProblemSolver(MyScene):  # 11th scene
         self.play(AnimationGroup(*[Write(l_case[i]) for i in range(3)], lag_ratio=1))
         self.wait(4)
         self.play(TransformMatchingTex(l_case, l_case_1))
-        self.play(Circumscribe(l_case_1, color=COLOR_3, fade_out=True, buff=MED_SMALL_BUFF))
+        self.play(Circumscribe(l_case_1, color=GREY_B, fade_out=True, buff=MED_SMALL_BUFF))
         self.wait()
         self.play(FadeOut(l_case_1))
 
@@ -148,7 +148,7 @@ class S11_ProblemSolver(MyScene):  # 11th scene
     def solution_part_2(self, implies_not_zn):
 
         self.play(implies_not_zn.animate.shift(1.5*UP))
-        self.wait(3)
+        self.wait(2) # +1
 
         not_rel_prime_expl = MathTex(r"k^b &= 0\\", 
                                      r"k\cdot b\mod n", r"&=0\\", 
@@ -157,10 +157,10 @@ class S11_ProblemSolver(MyScene):  # 11th scene
                                      r"\gcd(n,k) &\neq 1").shift(0.5*LEFT+DOWN)
         self.set_color_method(not_rel_prime_expl, [(0,0), (1,0), (3,0), (4,2), (5,6)], self.k_color)
         self.set_color_method(not_rel_prime_expl, [(1,-1), (3,-1), (4,0), (5,4)], self.n_color)
-        self.play(AnimationGroup(*[Write(not_rel_prime_expl[i]) for i in range(2)], lag_ratio=1))
-        self.wait(3)
-        self.play(AnimationGroup(*[Write(not_rel_prime_expl[i]) for i in range(2,5)], lag_ratio=3))
-        self.wait(7)
+        self.play(AnimationGroup(*[Write(not_rel_prime_expl[i]) for i in range(3)], lag_ratio=1))
+        self.wait(4)
+        self.play(AnimationGroup(*[Write(not_rel_prime_expl[i]) for i in range(3,5)], lag_ratio=3))
+        self.wait(6)
         self.play(Write(not_rel_prime_expl[-1]))
         self.wait(2)
         self.play(FadeOut(not_rel_prime_expl))
@@ -169,7 +169,7 @@ class S11_ProblemSolver(MyScene):  # 11th scene
         self.set_color_method(not_rel_prime, [(0,6), (2,1)], self.k_color)
         self.set_color_method(not_rel_prime, [(0,4), (2,-1)], self.n_color)
         self.play(Write(not_rel_prime))
-        self.play(Circumscribe(not_rel_prime, fade_out=True, buff=MED_SMALL_BUFF, color=WHITE))
+        self.play(Circumscribe(not_rel_prime, fade_out=True, buff=MED_SMALL_BUFF, color=GREY_B))
 
         self.wait(2)
         self.play(FadeOut(implies_not_zn), FadeOut(not_rel_prime))

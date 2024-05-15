@@ -224,7 +224,7 @@ class S6_IntroGroup(MovingCameraScene):  # 6th scene
         ax_3 = MathTex(r"\forall_{a\in G}\;\; \exists_{a^{-1}\in G}\quad a*a^{-1}=a^{-1}*a=e")  # Inverse element
 
         axioms_vgroup = VGroup(ax_0, ax_1, ax_2, ax_3).arrange(direction=DOWN, aligned_edge=LEFT).to_edge(UL)
-        wait_list = [12, 23, 16.5, 26.5]
+        wait_list = [12, 23, 16.5, 25]
         self.wait()
         for i, ax in enumerate(axioms_vgroup):
             self.play(Write(ax), run_time=2)
