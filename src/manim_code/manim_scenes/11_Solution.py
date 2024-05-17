@@ -109,37 +109,37 @@ class S11_ProblemSolver(MyScene):  # 11th scene
         self.play(k_text.animate.shift(UP))
         self.wait(9)
 
-        implication_to_not_zn_questioned = MathTex(r"\min\{ c\in\mathbb{N}: k^c=0 \}", r"=b", r"< n \quad", r"\overset{?}{\implies}", r"\quad \langle k \rangle \neq \mathbb{Z}_n ")
-        self.set_color_method(implication_to_not_zn_questioned, [(0,8), (4,1)], self.k_color)
-        self.set_color_method(implication_to_not_zn_questioned, [(2,-1), (4,-1)], self.n_color)
-        self.play(Write(implication_to_not_zn_questioned[:3]))
-        self.wait()
-        self.play(Write(implication_to_not_zn_questioned[3]))
-        self.play(Write(implication_to_not_zn_questioned[4:]))
-        self.wait(3)
+        implication_to_not_zn_questioned = MathTex(r"\exists_{b\in\mathbb{N},\, b<n}\; k^b = 0\quad", r"\overset{?}{\implies}", r"\quad \langle k \rangle \neq \mathbb{Z}_n ")
+        self.set_color_method(implication_to_not_zn_questioned, [(0,8), (2,1)], self.k_color)
+        self.set_color_method(implication_to_not_zn_questioned, [(0,7), (2,-1)], self.n_color)
+        self.play(Write(implication_to_not_zn_questioned[0]), run_time=2)
+        self.wait(2)
+        self.play(Write(implication_to_not_zn_questioned[1]))
+        self.play(Write(implication_to_not_zn_questioned[2]))
+        self.wait(4)
 
-        implication_to_not_zn = MathTex(r"\min\{ c\in\mathbb{N}: k^c=0 \}", r"< n \quad", r"\implies", r"\quad \langle k \rangle \neq \mathbb{Z}_n ")
+        implication_to_not_zn = MathTex(r"\exists_{b\in\mathbb{N},\, b<n}\; k^b = 0\quad", r"\implies", r"\quad \langle k \rangle \neq \mathbb{Z}_n ")
         self.set_color_method(implication_to_not_zn, [(0,8), (-1,1)], self.k_color)
-        self.set_color_method(implication_to_not_zn, [(1,-1), (-1,-1)], self.n_color)
+        self.set_color_method(implication_to_not_zn, [(0,7), (-1,-1)], self.n_color)
 
-        implication_to_not_zn_expl = MathTex(r"b\in\mathbb{N} \;\land\; b<n \;\land\; k^b=0", r"\quad\implies\quad |\langle k \rangle| = b < n = |\mathbb{Z}_n|\\", r"\implies \langle k \rangle \neq \mathbb{Z}_n ").shift(1.5*DOWN)
+        implication_to_not_zn_expl = MathTex(r"b\in\mathbb{N} \;\land\; b<n \;\land\; k^b=0", r"\quad\implies\quad |\langle k \rangle| \leqslant b < n = |\mathbb{Z}_n|\\", r"\implies \langle k \rangle \neq \mathbb{Z}_n ").shift(1.5*DOWN)
         self.set_color_method(implication_to_not_zn_expl, [(0,8), (1,4), (2,3)], self.k_color)
         self.set_color_method(implication_to_not_zn_expl, [(0,6), (1,10), (1,14), (2,-1)], self.n_color)
-        self.play(Write(implication_to_not_zn_expl[0]))
-        self.wait(2)
-        self.play(Write(implication_to_not_zn_expl[1]))
+        self.play(Write(implication_to_not_zn_expl[0], run_time=1.5))
         self.wait(5)
+        self.play(Write(implication_to_not_zn_expl[1]))
+        self.wait(3)
         self.play(Write(implication_to_not_zn_expl[2]))
-        self.wait(6)
+        self.wait(2)
         self.play(FadeOut(implication_to_not_zn_expl))
 
         self.play(TransformMatchingTex(implication_to_not_zn_questioned, implication_to_not_zn))
         self.wait()
         self.play(FadeOut(k_text), FadeOut(m_text))
 
-        implication_to_not_zn_with_b = MathTex(r"b=", r"\min\{ c\in\mathbb{N}: k^c=0 \}", r"< n \quad", r"\implies", r"\quad \langle k \rangle \neq \mathbb{Z}_n ")
-        self.set_color_method(implication_to_not_zn_with_b, [(1,8), (-1,1)], self.k_color)
-        self.set_color_method(implication_to_not_zn_with_b, [(2,-1), (-1,-1)], self.n_color)
+        implication_to_not_zn_with_b = MathTex(r"\exists_{b\in\mathbb{N},\, b<n}\; k^b = 0\quad", r"\implies", r"\quad \langle k \rangle \neq \mathbb{Z}_n ")
+        self.set_color_method(implication_to_not_zn_with_b, [(0,8), (-1,1)], self.k_color)
+        self.set_color_method(implication_to_not_zn_with_b, [(0,7), (-1,-1)], self.n_color)
         self.play(TransformMatchingTex(implication_to_not_zn, implication_to_not_zn_with_b))
 
         return implication_to_not_zn_with_b
@@ -147,8 +147,50 @@ class S11_ProblemSolver(MyScene):  # 11th scene
 
     def solution_part_2(self, implies_not_zn):
 
-        self.play(implies_not_zn.animate.shift(1.5*UP))
-        self.wait(2) # +1
+        # 1st part of the proof
+
+        # implication down
+        self.implication_down(implies_not_zn)
+        # implication up
+        self.implication_up()
+        # end first part of proof
+        self.sum_up_implication()
+
+        # 2nd part of the proof
+        self.second_part_proof()
+
+
+        # show results of the proof
+        first_implication = MathTex(r"\gcd(n,k) = 1", r"\quad\implies\quad", r"\langle k \rangle = \mathbb{Z}_n").shift(0.5*UP)
+        self.set_color_method(first_implication, [(0,6), (2,1)], self.k_color)
+        self.set_color_method(first_implication, [(0,4), (2,-1)], self.n_color)
+
+        second_implication = MathTex(r"\gcd(n,k) \neq 1", r"\quad\implies\quad", r"\langle k \rangle \neq \mathbb{Z}_n").shift(0.5*DOWN)
+        self.set_color_method(second_implication, [(0,6), (2,1)], self.k_color)
+        self.set_color_method(second_implication, [(0,4), (2,-1)], self.n_color)
+
+        self.play(Write(first_implication))
+        self.wait(2)
+        self.play(Write(second_implication))
+        self.wait(4)
+
+        self.play(Circumscribe(VGroup(first_implication, second_implication), color=GREY_B, fade_out=True, buff=MED_SMALL_BUFF))
+        self.wait()
+
+        return first_implication, second_implication 
+
+   
+
+
+
+    def implication_down(self, text_to_transform) -> None:
+        b_smaller_then_n = MathTex(r"\exists_{b\in\mathbb{N},\, b<n}\; k^b = 0\quad")
+        b_smaller_then_n[0][8].set_color(COLOR_1)
+        b_smaller_then_n[0][7].set_color(COLOR_2)
+        self.play(TransformMatchingTex(text_to_transform, b_smaller_then_n))
+        self.play(b_smaller_then_n.animate.shift(1.5*UP))
+
+        self.wait(2)
 
         not_rel_prime_expl = MathTex(r"k^b &= 0\\", 
                                      r"k\cdot b\mod n", r"&=0\\", 
@@ -162,40 +204,108 @@ class S11_ProblemSolver(MyScene):  # 11th scene
         self.play(AnimationGroup(*[Write(not_rel_prime_expl[i]) for i in range(3,5)], lag_ratio=3))
         self.wait(6)
         self.play(Write(not_rel_prime_expl[-1]))
+        implication_down = MathTex(r"\Downarrow", font_size=100, color=RED_D).shift(5*LEFT).set_z_index(2)
+        self.wait(4)
+        self.play(Create(implication_down))
         self.wait(2)
-        self.play(FadeOut(not_rel_prime_expl))
+        self.play(FadeOut(not_rel_prime_expl[:-1]))
+        self.play(implication_down.animate.shift(4*RIGHT+0.5*DOWN))
+        implication_up = MathTex(r"\Uparrow", font_size=100, color=GREY_E).shift(RIGHT+0.5*DOWN).set_z_index(1)
+        self.wait(7)
+        self.play(FadeIn(implication_up))
+        self.wait(2)
+        self.play(implication_up.animate.shift(LEFT+0.3*UP), implication_down.animate.shift(RIGHT))
+        self.wait()
+        self.play(Unwrite(b_smaller_then_n), Unwrite(not_rel_prime_expl[-1]), Unwrite(implication_down), Unwrite(implication_up))
+        self.wait(4)
 
-        not_rel_prime = MathTex(r"\gcd(n,k) \neq 1", r"\quad\implies\quad", r"\langle k \rangle \neq \mathbb{Z}_n")
+
+    def implication_up(self):
+        implications_up = MathTex(r"\gcd(n,k) &= d \neq 1\\",
+                                r"n=db,\; b&\in\mathbb{N},\; b<n\\",
+                                r"k=da,\; a&\in\mathbb{N},\; a<n\\",
+                                r"k^b = kb \;\;&\text{mod}\; n = \\",
+                                r"= adb \;\;&\text{mod}\; n = \\",
+                                r"= an \;\;&\text{mod}\; n = 0\\",
+                                r"\exists_{b\in\mathbb{N},\, b<n}&\; k^b = 0\\").shift(0.5*DOWN)
+        self.set_color_method(implications_up, [(0,6), (2,0), (3,0), (3,3), (6,8)], self.k_color)
+        self.set_color_method(implications_up, [(0,4), (1,0), (1,11), (2,11), (3,-2), (4,-2), (5,2), (5,-3), (6,7)], self.n_color)
+        self.set_color_method(implications_up, [(0,9), (1,2), (2,2), (4,2)], COLOR_3)
+
+        self.write_and_fadeout_implications_up(implications_up)
+
+        implication_down = MathTex(r"\Downarrow", font_size=100, color=RED_D).shift(0.5*DOWN+LEFT).set_z_index(2)
+        implication_up = MathTex(r"\Uparrow", font_size=100, color=RED_D).shift(0.5*DOWN+RIGHT).set_z_index(1)
+
+        self.play(Create(implication_down))
+        self.wait()
+        self.play(Create(implication_up))
+        self.play(implication_down.animate.shift(RIGHT), implication_up.animate.shift(LEFT+0.3*UP))
+
+        self.wait(3)
+        self.play(Unwrite(implications_up[0]), Unwrite(implications_up[-1]), Unwrite(implication_down), Unwrite(implication_up))
+
+    def write_and_fadeout_implications_up(self, implications):
+
+        self.play(Write(implications[0]))
+        self.wait(7)
+
+        self.play(Write(implications[1:3]))
+        self.wait(7)
+
+        self.play(Write(implications[3]))
+        self.wait(6)
+
+        self.play(Circumscribe(implications[2][:4], color=RED_D), Circumscribe(implications[3][3], color=RED_D))
+        self.play(Write(implications[4]))
+        self.play(Circumscribe(implications[1][:4], color=RED_D), Circumscribe(implications[4][2:4], color=RED_D))
+        self.wait(2)
+        self.play(Write(implications[5]))
+        self.wait(6)
+
+        self.play(Write(implications[6]))
+        self.wait(2)
+
+
+        self.play(FadeOut(implications[1:-1]))
+
+
+    def sum_up_implication(self):
+
+        first_part_end_1_2 = MathTex(r"\exists_{b\in\mathbb{N},\, b<n}\; k^b = 0\quad", r"\iff", r"\quad\gcd(n,k) \neq 1").shift(0.5*DOWN)
+        self.set_color_method(first_part_end_1_2, [(0,8), (2,6)], self.k_color)
+        self.set_color_method(first_part_end_1_2, [(0,7), (2,4)], self.n_color)
+        first_part_end_3 = MathTex(r"\exists_{b\in\mathbb{N},\, b<n}\; k^b = 0", r"\quad\implies\quad", r"\langle k \rangle \neq \mathbb{Z}_n ").shift(UP)
+        self.set_color_method(first_part_end_3, [(0,8), (2,1)], self.k_color)
+        self.set_color_method(first_part_end_3, [(0,7), (2,-1)], self.n_color)
+        not_rel_prime = MathTex(r"\gcd(n,k) \neq 1", r"\quad\implies\quad", r"\langle k \rangle \neq \mathbb{Z}_n").shift(0.5*UP)
         self.set_color_method(not_rel_prime, [(0,6), (2,1)], self.k_color)
         self.set_color_method(not_rel_prime, [(0,4), (2,-1)], self.n_color)
-        self.play(Write(not_rel_prime))
+
+        self.wait(2)
+        self.play(Write(first_part_end_1_2))
+        self.play(Write(first_part_end_3))
+        self.wait(5)
+        self.play(TransformMatchingTex(VGroup(first_part_end_1_2, first_part_end_3), not_rel_prime))
+
         self.play(Circumscribe(not_rel_prime, fade_out=True, buff=MED_SMALL_BUFF, color=GREY_B))
 
         self.wait(2)
-        self.play(FadeOut(implies_not_zn), FadeOut(not_rel_prime))
+        self.play(FadeOut(not_rel_prime))
 
 
-        # now we want to show that only k relatively prime to n can generate Z_n group
+    def second_part_proof(self):
         rel_prime = MathTex(r"\gcd(n,k) = 1", r"\quad\implies\quad", r"\langle k \rangle = \mathbb{Z}_n").shift(1.5*UP)
         self.set_color_method(rel_prime, [(0,6), (2,1)], self.k_color)
         self.set_color_method(rel_prime, [(0,4), (2,-1)], self.n_color)
         self.play(Write(rel_prime))
         self.wait(14)
 
-        rel_prime_contr = MathTex(r"\gcd(n,k) = 1", r"\quad\implies\quad", r"\langle k \rangle \neq \mathbb{Z}_n").shift(1.5*UP)
+        rel_prime_contr = MathTex(r"\gcd(n,k) = 1", r"\quad\land\quad", r"\langle k \rangle \neq \mathbb{Z}_n").shift(1.5*UP)
         self.set_color_method(rel_prime_contr, [(0,6), (2,1)], self.k_color)
         self.set_color_method(rel_prime_contr, [(0,4), (2,-1)], self.n_color)
         self.play(TransformMatchingTex(rel_prime, rel_prime_contr), run_time=2)
-        self.wait(12)
-
-        self.play(Write(not_rel_prime))
-        self.wait(17)
-        box = SurroundingRectangle(VGroup(rel_prime_contr, not_rel_prime), color=RED_D, buff=MED_LARGE_BUFF, corner_radius=0.1)
-        self.play(FadeIn(box), run_time=2)
-        self.wait(3)
-        self.play(FadeOut(not_rel_prime, box))
         self.wait(6)
-
 
 
         rel_prime_expl = MathTex(r"a\in\mathbb{N}&,\; a<n\\", 
@@ -204,8 +314,10 @@ class S11_ProblemSolver(MyScene):  # 11th scene
                                  r"n&|ak\\", 
                                  r"n&|a").shift(DOWN)
         self.set_color_method(rel_prime_expl, [(1,0), (2,1), (3,-1)], self.k_color)
-        self.set_color_method(rel_prime_expl, [(0,-1), (2,4), (3,0), (4,0)], self.n_color)
-        self.play(AnimationGroup(*[Write(rel_prime_expl[i]) for i in range(4)], lag_ratio=1.8))
+        self.set_color_method(rel_prime_expl, [(0,-1), (2,3), (3,0), (4,0)], self.n_color)
+        self.play(AnimationGroup(*[Write(rel_prime_expl[i]) for i in range(3)], lag_ratio=1.8))
+        self.wait(3)
+        self.play(Write(rel_prime_expl[3]))
         self.wait(7)
         self.play(Write(rel_prime_expl[4]))
         self.wait(5)
@@ -217,17 +329,8 @@ class S11_ProblemSolver(MyScene):  # 11th scene
         self.play(Create(lightning))
 
         self.wait(3)
-        self.play(FadeOut(rel_prime_expl, lightning))
+        self.play(FadeOut(rel_prime_expl, lightning, rel_prime_contr))
 
-        self.play(TransformMatchingTex(rel_prime_contr, rel_prime))
-        self.wait()
-        self.play(Circumscribe(rel_prime, fade_out=True, color=GREY_B, buff=MED_SMALL_BUFF))
-        self.wait()
-
-        self.play(Write(not_rel_prime))
-        self.wait(2)
-
-        return rel_prime, not_rel_prime
 
 
     def animation_before_the_arrow(self, boxes, start_box_index, run_time_weight=1):
